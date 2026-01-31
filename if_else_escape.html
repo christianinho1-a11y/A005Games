@@ -32,7 +32,8 @@
         <header class="card-header">
           <h2 class="card-title">Play the Game</h2>
           <p class="card-subtitle">
-            Use <code>if</code>, <code>else if</code>, and <code>else</code> to escape each scenario.
+            Read the code and scenario, then choose the option that matches what
+            the program will do.
           </p>
         </header>
 
@@ -52,10 +53,10 @@
         </div>
 
         <!-- Question / play area -->
-        <div id="gameArea" class="sub-card">
+        <div id="gameArea" class="sub-card" hidden>
           <div class="sub-card-header">
             <h3 class="sub-card-title" id="levelInfo">
-              Player Level 1 – Question 1 / 3
+              Level 1 – Question 1 / 5
             </h3>
             <p class="sub-card-meta">
               Score: <span id="scoreDisplay">0</span>
@@ -63,21 +64,15 @@
           </div>
 
           <p id="scenarioText" class="scenario-text">
-            A bridge can only hold weight &lt;= 100. yourWeight = 95.
+            <!-- scenario text injected by JS -->
           </p>
 
           <pre id="codeSnippet" class="code-block">
-if (yourWeight &lt;= 100) {
-  crossBridge();
-}</pre>
+<!-- code snippet injected by JS -->
+</pre>
 
           <div id="choiceButtons" class="button-row">
-            <button class="btn btn-choice" data-choice="0">
-              Cross the bridge.
-            </button>
-            <button class="btn btn-choice" data-choice="1">
-              Find another path.
-            </button>
+            <!-- choice buttons injected by JS -->
           </div>
 
           <button id="nextQuestionBtn" class="btn btn-small" disabled>
@@ -112,25 +107,26 @@ if (yourWeight &lt;= 100) {
           <ol class="info-list">
             <li>Enter your name and press <strong>Start Game</strong>.</li>
             <li>
-              Read the <strong>scenario</strong> and look at the
+              Read the <strong>scenario</strong> and the
               <strong>if / else code</strong>.
             </li>
             <li>
-              Choose the option that matches what the code will do
-              (<em>not</em> what you would do in real life).
+              Choose the option that matches what the code will actually do,
+              not what you personally would do.
             </li>
             <li>
-              Correct answers increase your score. Try to clear all questions!
+              Correct answers earn you 1 point. Try to get the highest score
+              across all questions.
             </li>
             <li>
-              When the game ends, save your score to the leaderboard and try to
+              At the end, save your score to the leaderboard and try again to
               beat it.
             </li>
           </ol>
         </section>
 
-        <!-- Leaderboard card (always visible summary) -->
-        <section class="card">
+        <!-- Leaderboard card -->
+        <section class="card" id="leaderboardCard">
           <header class="card-header">
             <h2 class="card-title">Leaderboard</h2>
             <p class="card-subtitle small">
@@ -151,3 +147,4 @@ if (yourWeight &lt;= 100) {
   </main>
 </body>
 </html>
+
