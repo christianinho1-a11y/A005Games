@@ -55,18 +55,18 @@
 
     <!-- ADMIN DASHBOARD -->
     <section class="layout-grid" id="adminSection" hidden>
-      <!-- LEFT COLUMN: Game registry -->
+      <!-- LEFT COLUMN: Game registry + file creator -->
       <section class="card card-main">
         <header class="card-header">
           <h2 class="card-title">Games Registry</h2>
           <p class="card-subtitle">
-            Add, view, and remove games. Each game gets its own leaderboard key.
+            Add, view, and remove games. Clear leaderboards. Generate files on WAMP.
           </p>
         </header>
 
-        <!-- Add game form -->
+        <!-- Add game form (registry only) -->
         <div class="sub-card">
-          <h3 class="sub-card-title">Add New Game</h3>
+          <h3 class="sub-card-title">Register Existing Game</h3>
           <div class="form-row stacked">
             <label for="gameNameInput">Display Name</label>
             <input
@@ -92,14 +92,90 @@
             </select>
 
             <p class="sub-card-meta small">
-              The admin panel will auto-generate a
+              The admin panel auto-generates a
               <strong>leaderboard key</strong> from the file name.<br />
               Example: <code>if_else_escape.html → if_else_escape_leaderboard</code><br />
               Use that key in the game’s JS when you set up its leaderboard.
             </p>
 
-            <button id="addGameBtn" class="btn">Add Game</button>
+            <button id="addGameBtn" class="btn">Register Game</button>
           </div>
+        </div>
+
+        <!-- Create new files on WAMP -->
+        <div class="sub-card">
+          <h3 class="sub-card-title">Create New Game Files (WAMP)</h3>
+          <p class="sub-card-meta small">
+            This uses <code>save_game.php</code> on your WAMP server to create
+            a new HTML + JS file in this folder. Use carefully.
+          </p>
+
+          <form
+            action="save_game.php"
+            method="post"
+            class="form-row stacked"
+            target="_blank"
+          >
+            <label for="newGameName">Game Name (for your reference)</label>
+            <input
+              id="newGameName"
+              name="game_name"
+              type="text"
+              class="input"
+              placeholder="e.g. Boolean Battle"
+              required
+            />
+
+            <label for="newHtmlFile">HTML File Name</label>
+            <input
+              id="newHtmlFile"
+              name="html_file"
+              type="text"
+              class="input"
+              placeholder="e.g. boolean_battle.html"
+              required
+            />
+
+            <label for="newJsFile">JS File Name</label>
+            <input
+              id="newJsFile"
+              name="js_file"
+              type="text"
+              class="input"
+              placeholder="e.g. boolean_battle.js"
+              required
+            />
+
+            <label for="htmlCodeArea">HTML Code</label>
+            <textarea
+              id="htmlCodeArea"
+              name="html_code"
+              class="input"
+              rows="8"
+              placeholder="Paste full HTML here"
+              required
+            ></textarea>
+
+            <label for="jsCodeArea">JS Code</label>
+            <textarea
+              id="jsCodeArea"
+              name="js_code"
+              class="input"
+              rows="8"
+              placeholder="Paste full JavaScript here"
+              required
+            ></textarea>
+
+            <p class="sub-card-meta small">
+              After submitting, files will be written into this folder on your
+              WAMP server. You can then register the game above so its
+              leaderboard can be managed here.
+            </p>
+
+            <button type="submit" class="btn">
+              Create Files on Server
+            </button>
+          </form>
         </div>
 
         <!-- Game list -->
@@ -123,29 +199,27 @@
           </header>
           <ul class="info-list">
             <li>
-              <strong>Login:</strong> Admin code is <code>A005</code>. This is
-              purely front-end; students can’t accidentally delete things
-              without knowing the code.
+              <strong>Login:</strong> Admin code is <code>A005</code>. Until
+              that is entered, the admin tools stay hidden.
             </li>
             <li>
-              <strong>Game Registry:</strong> Each game you add is stored in
-              <code>localStorage</code> on this browser under a registry key.
+              <strong>Registry:</strong> Each game is stored in
+              <code>localStorage</code> on this browser as metadata
+              (name/file/category/leaderboardKey).
             </li>
             <li>
               <strong>Leaderboards:</strong> Each game gets a
-              <code>leaderboardKey</code>. The admin panel uses that to clear
-              scores. Your game JS should use the same key.
+              <code>leaderboardKey</code>. Your game JS should use the same
+              key when saving scores.
             </li>
             <li>
-              <strong>If / Else Escape example:</strong><br />
-              File: <code>if_else_escape.html</code><br />
-              Game ID: <code>if_else_escape</code><br />
-              Leaderboard key: <code>if_else_escape_leaderboard</code>
+              <strong>File Creator:</strong> The “Create New Game Files” section
+              posts to <code>save_game.php</code> (PHP) which writes the HTML +
+              JS files into this folder on your WAMP server.
             </li>
             <li>
-              <strong>Note:</strong> This page cannot create actual files on
-              your WAMP folder. It manages metadata and leaderboards stored in
-              the browser.
+              <strong>Security note:</strong> This is designed for a local
+              classroom WAMP setup, not a public web server.
             </li>
           </ul>
         </section>
@@ -154,3 +228,4 @@
   </main>
 </body>
 </html>
+
