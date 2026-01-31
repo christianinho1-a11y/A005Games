@@ -1,409 +1,340 @@
-// Question data: levels, prompts, code snippets, and answer choices.
-const questions = [
+// if_else_escape.js
+
+// ----- Question bank -----
+// Each question tests understanding of if / else logic.
+// Correct answer is given by correctIndex.
+
+const IF_ELSE_QUESTIONS = [
   {
     level: 1,
-    prompt: "You see a locked door. hasKey = true.",
-    code: "if (hasKey == true) {\n  goThroughDoor();\n}",
-    choices: [
-      {
-        text: "Go through the door.",
-        correct: true,
-        explanation: "hasKey is true, so the condition runs and you go through the door."
-      },
-      {
-        text: "Go look for a key.",
-        correct: false,
-        explanation: "You already have the key, so you should go through the door."
-      }
-    ]
-  },
-  {
-    level: 1,
-    prompt: "Your flashlight is on. batteryLevel = 20.",
-    code: "if (batteryLevel > 0) {\n  keepLightOn();\n}",
-    choices: [
-      {
-        text: "Keep the light on.",
-        correct: true,
-        explanation: "20 is greater than 0, so the light stays on."
-      },
-      {
-        text: "Turn the light off immediately.",
-        correct: false,
-        explanation: "The condition is true, so you can keep it on for now."
-      }
-    ]
+    label: "Single if",
+    scenario:
+      "A bridge can only hold weight <= 100. yourWeight = 95. What does the code do?",
+    code: `if (yourWeight <= 100) {
+  crossBridge();
+}`,
+    choices: ["Cross the bridge.", "Don't cross the bridge."],
+    correctIndex: 0,
   },
   {
     level: 1,
-    prompt: "A bridge can only hold weight <= 100. yourWeight = 95.",
-    code: "if (yourWeight <= 100) {\n  crossBridge();\n}",
-    choices: [
-      {
-        text: "Cross the bridge.",
-        correct: true,
-        explanation: "95 is less than or equal to 100, so crossing is safe."
-      },
-      {
-        text: "Find another path.",
-        correct: false,
-        explanation: "The condition is true, so you can cross safely."
-      }
-    ]
+    label: "Single if",
+    scenario:
+      "You only get extra credit if score > 90. Your score is 72. What happens?",
+    code: `if (score > 90) {
+  giveExtraCredit();
+}`,
+    choices: ["You get extra credit.", "You do NOT get extra credit."],
+    correctIndex: 1,
   },
   {
     level: 2,
-    prompt: "A guard checks your badge. hasBadge = false.",
-    code: "if (hasBadge == true) {\n  enterLab();\n} else {\n  stayOutside();\n}",
+    label: "If / else",
+    scenario:
+      "You are checking if a user is old enough to drive. age = 15. What runs?",
+    code: `if (age >= 16) {
+  allowDriving();
+} else {
+  denyDriving();
+}`,
     choices: [
-      {
-        text: "Enter the lab.",
-        correct: false,
-        explanation: "hasBadge is false, so you should stay outside."
-      },
-      {
-        text: "Stay outside.",
-        correct: true,
-        explanation: "The condition is false, so the else branch runs."
-      }
-    ]
+      "allowDriving() runs.",
+      "denyDriving() runs.",
+      "Both functions run.",
+    ],
+    correctIndex: 1,
   },
   {
     level: 2,
-    prompt: "A terminal requires a passcode. hasPasscode = true.",
-    code: "if (hasPasscode == true) {\n  unlockTerminal();\n} else {\n  searchForClue();\n}",
+    label: "If / else",
+    scenario:
+      "You pass a quiz if score >= 70. score = 92. What does the code do?",
+    code: `if (score >= 70) {
+  show("You passed!");
+} else {
+  show("Try again.");
+}`,
     choices: [
-      {
-        text: "Unlock the terminal.",
-        correct: true,
-        explanation: "hasPasscode is true, so unlockTerminal() runs."
-      },
-      {
-        text: "Search for a clue.",
-        correct: false,
-        explanation: "You already have the passcode, so unlock the terminal."
-      }
-    ]
-  },
-  {
-    level: 2,
-    prompt: "You have to choose a path. isBridgeStable = false.",
-    code: "if (isBridgeStable == true) {\n  crossBridge();\n} else {\n  takeTunnel();\n}",
-    choices: [
-      {
-        text: "Cross the bridge.",
-        correct: false,
-        explanation: "The bridge is not stable, so you should take the tunnel."
-      },
-      {
-        text: "Take the tunnel.",
-        correct: true,
-        explanation: "isBridgeStable is false, so the else branch runs."
-      }
-    ]
+      `Shows "You passed!"`,
+      `Shows "Try again."`,
+      "Shows both messages.",
+    ],
+    correctIndex: 0,
   },
   {
     level: 3,
-    prompt: "Power status check. powerOn = true, backupOn = false.",
-    code: "if (powerOn == true) {\n  openGate();\n} else if (backupOn == true) {\n  startBackup();\n} else {\n  waitOutside();\n}",
+    label: "Else if chain",
+    scenario:
+      "You are classifying grades. score = 83. Which message appears?",
+    code: `if (score >= 90) {
+  grade = "A";
+} else if (score >= 80) {
+  grade = "B";
+} else if (score >= 70) {
+  grade = "C";
+} else {
+  grade = "F";
+}`,
     choices: [
-      {
-        text: "Open the gate.",
-        correct: true,
-        explanation: "powerOn is true, so the first branch runs."
-      },
-      {
-        text: "Start backup.",
-        correct: false,
-        explanation: "The first condition is already true, so backup is not used."
-      },
-      {
-        text: "Wait outside.",
-        correct: false,
-        explanation: "powerOn is true, so you can open the gate."
-      }
-    ]
+      'grade is set to "A".',
+      'grade is set to "B".',
+      'grade is set to "C".',
+      'grade is set to "F".',
+    ],
+    correctIndex: 1,
   },
-  {
-    level: 3,
-    prompt: "Enemy scan. hasShield = false, hasEnergy = true.",
-    code: "if (hasShield == true) {\n  chargeForward();\n} else if (hasEnergy == true) {\n  useEnergyBlast();\n} else {\n  hide();\n}",
-    choices: [
-      {
-        text: "Charge forward.",
-        correct: false,
-        explanation: "You do not have a shield, so you should not charge."
-      },
-      {
-        text: "Use energy blast.",
-        correct: true,
-        explanation: "hasShield is false but hasEnergy is true, so useEnergyBlast()."
-      },
-      {
-        text: "Hide.",
-        correct: false,
-        explanation: "You still have energy, so use the energy blast."
-      }
-    ]
-  },
-  {
-    level: 3,
-    prompt: "Security doors. codeMatch = false, override = false.",
-    code: "if (codeMatch == true) {\n  openDoor();\n} else if (override == true) {\n  forceOpen();\n} else {\n  triggerAlarm();\n}",
-    choices: [
-      {
-        text: "Open the door normally.",
-        correct: false,
-        explanation: "codeMatch is false, so the door won't open normally."
-      },
-      {
-        text: "Force the door open.",
-        correct: false,
-        explanation: "override is also false, so you cannot force it."
-      },
-      {
-        text: "Trigger the alarm.",
-        correct: true,
-        explanation: "Both conditions are false, so the else branch runs."
-      }
-    ]
-  }
 ];
 
-// Leaderboard storage key and helpers.
-const leaderboardKey = "ifElseEscapeLeaderboard";
+// ----- State -----
 
-const setupPanel = document.querySelector("#setup-panel");
-const gamePanel = document.querySelector("#game-panel");
-const summaryPanel = document.querySelector("#summary-panel");
-const leaderboardPanel = document.querySelector("#leaderboard-panel");
-
-const playerNameInput = document.querySelector("#player-name");
-const startButton = document.querySelector("#start-game");
-const nameError = document.querySelector("#name-error");
-
-const playerDisplay = document.querySelector("#player-display");
-const levelDisplay = document.querySelector("#level-display");
-const questionDisplay = document.querySelector("#question-display");
-const scoreDisplay = document.querySelector("#score-display");
-const storyBox = document.querySelector("#story-box");
-const codeBlock = document.querySelector("#code-block");
-const choicesContainer = document.querySelector("#choices");
-const feedback = document.querySelector("#feedback");
-const nextButton = document.querySelector("#next-button");
-
-const summaryPlayer = document.querySelector("#summary-player");
-const summaryScore = document.querySelector("#summary-score");
-const saveScoreButton = document.querySelector("#save-score");
-const playAgainButton = document.querySelector("#play-again");
-const saveMessage = document.querySelector("#save-message");
-
-const leaderboardToggle = document.querySelector("#leaderboard-toggle");
-const leaderboardClose = document.querySelector("#leaderboard-close");
-const leaderboardList = document.querySelector("#leaderboard-list");
-
-const levelLabels = {
-  1: "Level 1 - Single IF",
-  2: "Level 2 - IF / ELSE",
-  3: "Level 3 - Nested IF / ELSE IF"
-};
-
-let playerName = "";
-let currentLevelIndex = 0;
 let currentQuestionIndex = 0;
-let score = 0;
+let currentScore = 0;
+let currentPlayerName = "";
+let hasAnsweredCurrent = false;
+let gameFinished = false;
+let scoreSavedForThisGame = false;
 
-// Handle player name input and start the game.
-startButton.addEventListener("click", () => {
-  const nameValue = playerNameInput.value.trim();
-  if (!nameValue) {
-    nameError.textContent = "Please enter your name before starting.";
-    return;
-  }
+// ----- DOM helpers -----
 
-  playerName = nameValue;
-  nameError.textContent = "";
-  score = 0;
-  currentLevelIndex = 0;
-  currentQuestionIndex = 0;
-
-  setupPanel.classList.add("hidden");
-  gamePanel.classList.remove("hidden");
-  summaryPanel.classList.add("hidden");
-  saveMessage.textContent = "";
-  saveMessage.classList.remove("success");
-
-  playerDisplay.textContent = playerName;
-  scoreDisplay.textContent = score;
-
-  renderQuestion();
-});
-
-// Render the current question and choices.
-function renderQuestion() {
-  nextButton.classList.add("hidden");
-  feedback.textContent = "";
-  choicesContainer.innerHTML = "";
-
-  const level = currentLevel();
-  const levelQuestions = questionsForLevel(level);
-  const question = levelQuestions[currentQuestionIndex];
-
-  levelDisplay.textContent = levelLabels[level];
-  levelDisplay.className = `level-badge level-${level}`;
-  questionDisplay.textContent = `${currentQuestionIndex + 1} / ${levelQuestions.length}`;
-
-  storyBox.textContent = question.prompt;
-  codeBlock.textContent = question.code;
-
-  question.choices.forEach((choice) => {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.textContent = choice.text;
-    button.addEventListener("click", () => handleChoice(choice));
-    choicesContainer.appendChild(button);
-  });
+function $(id) {
+  return document.getElementById(id);
 }
 
-// Handle answer selection, scoring, and feedback.
-function handleChoice(choice) {
-  const buttons = choicesContainer.querySelectorAll("button");
-  buttons.forEach((button) => {
-    button.disabled = true;
-  });
+// ----- Leaderboard helpers -----
 
-  if (choice.correct) {
-    score += 1;
-    scoreDisplay.textContent = score;
-    feedback.className = "feedback correct";
-    feedback.innerHTML = `<strong>Correct!</strong> ${choice.explanation}`;
-  } else {
-    feedback.className = "feedback incorrect";
-    feedback.innerHTML = `<strong>Not quite.</strong> ${choice.explanation}`;
-  }
+const LEADERBOARD_KEY = "if_else_escape_leaderboard";
 
-  if (isLastQuestionInLevel() && !isLastLevel()) {
-    feedback.innerHTML += `<p class="level-complete">Level ${currentLevel()} complete!</p>`;
-  }
-
-  nextButton.textContent = nextButtonLabel();
-  nextButton.classList.remove("hidden");
-}
-
-// Move to the next question or level.
-nextButton.addEventListener("click", () => {
-  if (isLastQuestionInLevel()) {
-    if (isLastLevel()) {
-      showSummary();
-      return;
-    }
-
-    currentLevelIndex += 1;
-    currentQuestionIndex = 0;
-  } else {
-    currentQuestionIndex += 1;
-  }
-
-  renderQuestion();
-});
-
-// Show the game over summary panel.
-function showSummary() {
-  gamePanel.classList.add("hidden");
-  summaryPanel.classList.remove("hidden");
-  summaryPlayer.textContent = playerName;
-  summaryScore.textContent = score;
-}
-
-// Save the score to the leaderboard in localStorage.
-saveScoreButton.addEventListener("click", () => {
-  const leaderboard = getLeaderboard();
-  leaderboard.push({ name: playerName, score });
-
-  leaderboard.sort((a, b) => b.score - a.score);
-  const trimmed = leaderboard.slice(0, 10);
-
-  localStorage.setItem(leaderboardKey, JSON.stringify(trimmed));
-  renderLeaderboard();
-  saveMessage.textContent = "Score saved to the leaderboard!";
-  saveMessage.classList.add("success");
-});
-
-// Reset the game so a player can play again.
-playAgainButton.addEventListener("click", () => {
-  setupPanel.classList.remove("hidden");
-  gamePanel.classList.add("hidden");
-  summaryPanel.classList.add("hidden");
-  playerNameInput.value = playerName;
-  nameError.textContent = "";
-  saveMessage.textContent = "";
-  saveMessage.classList.remove("success");
-});
-
-// Toggle leaderboard visibility.
-leaderboardToggle.addEventListener("click", () => {
-  leaderboardPanel.classList.toggle("hidden");
-});
-
-leaderboardClose.addEventListener("click", () => {
-  leaderboardPanel.classList.add("hidden");
-});
-
-// Load leaderboard on page load.
-renderLeaderboard();
-
-function questionsForLevel(level) {
-  return questions.filter((question) => question.level === level);
-}
-
-function currentLevel() {
-  return [1, 2, 3][currentLevelIndex];
-}
-
-function isLastQuestionInLevel() {
-  return currentQuestionIndex + 1 >= questionsForLevel(currentLevel()).length;
-}
-
-function isLastLevel() {
-  return currentLevelIndex >= 2;
-}
-
-function nextButtonLabel() {
-  if (isLastQuestionInLevel() && !isLastLevel()) {
-    return `Start ${levelLabels[currentLevel() + 1]}`;
-  }
-  return "Next Question";
-}
-
-// Read the leaderboard from localStorage or return an empty list.
-function getLeaderboard() {
-  const stored = localStorage.getItem(leaderboardKey);
-  if (!stored) {
-    return [];
-  }
-
+function loadLeaderboard() {
   try {
-    return JSON.parse(stored);
-  } catch (error) {
+    const stored = localStorage.getItem(LEADERBOARD_KEY);
+    if (!stored) return [];
+    const parsed = JSON.parse(stored);
+    if (!Array.isArray(parsed)) return [];
+    return parsed;
+  } catch (e) {
+    console.error("Error loading leaderboard", e);
     return [];
   }
 }
 
-// Render the leaderboard list in the panel.
-function renderLeaderboard() {
-  const entries = getLeaderboard();
-  leaderboardList.innerHTML = "";
+function saveLeaderboard(entries) {
+  try {
+    localStorage.setItem(LEADERBOARD_KEY, JSON.stringify(entries));
+  } catch (e) {
+    console.error("Error saving leaderboard", e);
+  }
+}
 
-  if (entries.length === 0) {
-    const empty = document.createElement("li");
-    empty.textContent = "No scores yet. Finish the game to add one!";
-    leaderboardList.appendChild(empty);
+function addScoreToLeaderboard(name, score) {
+  const entries = loadLeaderboard();
+  entries.push({
+    name: name || "Anonymous",
+    score,
+    timestamp: Date.now(),
+  });
+
+  // Sort by score desc, then most recent first
+  entries.sort((a, b) => {
+    if (b.score !== a.score) return b.score - a.score;
+    return b.timestamp - a.timestamp;
+  });
+
+  // Keep top 10
+  const trimmed = entries.slice(0, 10);
+  saveLeaderboard(trimmed);
+  renderLeaderboard(trimmed);
+}
+
+function renderLeaderboard(entries = loadLeaderboard()) {
+  const list = $("leaderboardList");
+  if (!list) return;
+  list.innerHTML = "";
+
+  if (!entries.length) {
+    const li = document.createElement("li");
+    li.textContent = "No scores saved yet.";
+    list.appendChild(li);
     return;
   }
 
   entries.forEach((entry, index) => {
-    const item = document.createElement("li");
-    item.textContent = `#${index + 1} ${entry.name} — ${entry.score}`;
-    leaderboardList.appendChild(item);
+    const li = document.createElement("li");
+    const nameSpan = document.createElement("span");
+    nameSpan.textContent = ` ${entry.name} — `;
+    const scoreSpan = document.createElement("span");
+    scoreSpan.textContent = `${entry.score} pts`;
+    scoreSpan.style.color = "#bfdbfe";
+
+    li.appendChild(nameSpan);
+    li.appendChild(scoreSpan);
+    list.appendChild(li);
   });
 }
+
+// ----- Game flow -----
+
+function resetGame() {
+  currentQuestionIndex = 0;
+  currentScore = 0;
+  hasAnsweredCurrent = false;
+  gameFinished = false;
+  scoreSavedForThisGame = false;
+
+  $("scoreDisplay").textContent = "0";
+  $("gameOver").hidden = true;
+  $("gameArea").hidden = false;
+  $("nextQuestionBtn").disabled = true;
+}
+
+function startGame() {
+  const nameInput = $("playerName");
+  const enteredName = nameInput.value.trim();
+  if (!enteredName) {
+    alert("Please enter your name to start.");
+    nameInput.focus();
+    return;
+  }
+
+  currentPlayerName = enteredName;
+  resetGame();
+  loadQuestion();
+}
+
+function loadQuestion() {
+  const q = IF_ELSE_QUESTIONS[currentQuestionIndex];
+  if (!q) {
+    // No question found – end the game
+    endGame();
+    return;
+  }
+
+  const levelInfo = $("levelInfo");
+  const total = IF_ELSE_QUESTIONS.length;
+  levelInfo.textContent = `Level ${q.level} – ${q.label} – Question ${
+    currentQuestionIndex + 1
+  } / ${total}`;
+
+  $("scenarioText").textContent = q.scenario;
+  $("codeSnippet").textContent = q.code;
+
+  // Build choice buttons
+  const container = $("choiceButtons");
+  container.innerHTML = "";
+  q.choices.forEach((choiceText, index) => {
+    const btn = document.createElement("button");
+    btn.className = "btn btn-choice";
+    btn.dataset.index = index.toString();
+    btn.textContent = choiceText;
+    btn.addEventListener("click", onChoiceClick);
+    container.appendChild(btn);
+  });
+
+  hasAnsweredCurrent = false;
+  $("nextQuestionBtn").disabled = true;
+}
+
+function onChoiceClick(event) {
+  if (hasAnsweredCurrent || gameFinished) return;
+
+  const button = event.currentTarget;
+  const chosenIndex = parseInt(button.dataset.index || "0", 10);
+  const q = IF_ELSE_QUESTIONS[currentQuestionIndex];
+  const correctIndex = q.correctIndex;
+
+  hasAnsweredCurrent = true;
+
+  // Mark buttons
+  const buttons = $("choiceButtons").querySelectorAll("button");
+  buttons.forEach((btn, index) => {
+    btn.disabled = true;
+
+    if (index === correctIndex) {
+      btn.style.borderColor = "#22c55e";
+      btn.style.boxShadow = "0 0 0 1px rgba(34,197,94,0.7)";
+    }
+
+    if (index === chosenIndex && index !== correctIndex) {
+      btn.style.borderColor = "#f97373";
+      btn.style.boxShadow = "0 0 0 1px rgba(248,113,113,0.7)";
+    }
+  });
+
+  // Scoring
+  if (chosenIndex === correctIndex) {
+    currentScore += 1;
+    $("scoreDisplay").textContent = String(currentScore);
+  }
+
+  $("nextQuestionBtn").disabled = false;
+}
+
+function goToNextQuestion() {
+  if (!hasAnsweredCurrent) return;
+
+  currentQuestionIndex += 1;
+  if (currentQuestionIndex >= IF_ELSE_QUESTIONS.length) {
+    endGame();
+  } else {
+    loadQuestion();
+  }
+}
+
+function endGame() {
+  gameFinished = true;
+  $("gameArea").hidden = true;
+  $("gameOver").hidden = false;
+  $("finalPlayerName").textContent = currentPlayerName || "Anonymous";
+  $("finalScore").textContent = String(currentScore);
+  scoreSavedForThisGame = false;
+}
+
+function saveCurrentScore() {
+  if (!gameFinished) return;
+  if (scoreSavedForThisGame) {
+    alert("This score is already saved.");
+    return;
+  }
+  addScoreToLeaderboard(currentPlayerName, currentScore);
+  scoreSavedForThisGame = true;
+  alert("Score saved to leaderboard!");
+}
+
+function clearLeaderboard() {
+  if (!confirm("Clear all leaderboard scores for this game?")) return;
+  saveLeaderboard([]);
+  renderLeaderboard([]);
+}
+
+// Scroll to leaderboard on the page
+function scrollToLeaderboard() {
+  const card = $("leaderboardCard");
+  if (!card) return;
+  card.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+// ----- Init -----
+
+document.addEventListener("DOMContentLoaded", () => {
+  // render leaderboard on load
+  renderLeaderboard();
+
+  const startBtn = $("startGameBtn");
+  const nextBtn = $("nextQuestionBtn");
+  const saveBtn = $("saveScoreBtn");
+  const playAgainBtn = $("playAgainBtn");
+  const clearBtn = $("clearLeaderboardBtn");
+  const openLeaderboardBtn = $("openLeaderboardBtn");
+
+  if (startBtn) startBtn.addEventListener("click", startGame);
+  if (nextBtn) nextBtn.addEventListener("click", goToNextQuestion);
+  if (saveBtn) saveBtn.addEventListener("click", saveCurrentScore);
+  if (playAgainBtn)
+    playAgainBtn.addEventListener("click", () => {
+      resetGame();
+      loadQuestion();
+    });
+  if (clearBtn) clearBtn.addEventListener("click", clearLeaderboard);
+  if (openLeaderboardBtn)
+    openLeaderboardBtn.addEventListener("click", scrollToLeaderboard);
+});
+
