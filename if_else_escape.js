@@ -299,11 +299,7 @@ function saveCurrentScore() {
   alert("Score saved to leaderboard!");
 }
 
-function clearLeaderboard() {
-  if (!confirm("Clear all leaderboard scores for this game?")) return;
-  saveLeaderboard([]);
-  renderLeaderboard([]);
-}
+
 
 // Scroll to leaderboard on the page
 function scrollToLeaderboard() {
