@@ -2,78 +2,152 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>If / Else Escape – CS Mini Game</title>
+  <title>If / Else Escape</title>
   <link rel="stylesheet" href="style.css" />
+  <script defer src="if_else_escape.js"></script>
 </head>
-<body>
-  <div class="page-wrapper">
+<body class="cs-body">
+  <a href="index.html" class="back-link">← Back to Hub</a>
+
+  <main class="page-wrap">
+    <!-- Top title + concept tag -->
     <header class="page-header">
-      <div class="page-header-left">
-        <a class="back-link" href="index.html">⬅ Back to Hub</a>
-        <h1>If / Else Escape</h1>
-        <p class="page-subtitle">Concept: Conditionals &amp; Decision Making</p>
+      <div>
+        <h1 class="page-title">// If / Else Escape</h1>
+        <p class="page-subtitle">
+          Concept: <span class="tag">Conditionals</span>
+          <span class="tag">Decision Making</span>
+        </p>
       </div>
-      <div class="page-header-right">
-        <button class="btn secondary-btn" id="leaderboard-toggle" type="button">Leaderboard</button>
-      </div>
+
+      <button id="openLeaderboardBtn" class="btn btn-outline">
+        View Leaderboard
+      </button>
     </header>
 
-    <main class="game-layout">
-      <!-- Player setup panel: shown before the game starts -->
-      <section class="panel player-setup" id="setup-panel">
-        <h2>Start Game</h2>
-        <label for="player-name">Enter your name to begin:</label>
-        <input id="player-name" type="text" placeholder="Your name" />
-        <button class="btn primary-btn" id="start-game" type="button">Start Game</button>
-        <p class="helper-text" id="name-error" aria-live="polite"></p>
-      </section>
+    <!-- Main 2-column layout -->
+    <section class="layout-grid">
+      <!-- LEFT: Game card -->
+      <section class="card card-main">
+        <header class="card-header">
+          <h2 class="card-title">Play the Game</h2>
+          <p class="card-subtitle">
+            Use <code>if</code>, <code>else if</code>, and <code>else</code> to escape each scenario.
+          </p>
+        </header>
 
-      <!-- Game panel: shown after the player enters a name -->
-      <section class="panel game-panel hidden" id="game-panel">
-        <div class="game-meta">
-          <span class="badge">Player <span class="meta-value" id="player-display"></span></span>
-          <span class="badge level-badge" id="level-display"></span>
-          <span class="badge">Question <span class="meta-value" id="question-display"></span></span>
-          <span class="badge score-badge">Score <span class="meta-value" id="score-display">0</span></span>
+        <!-- Start game box -->
+        <div class="sub-card">
+          <h3 class="sub-card-title">Start Game</h3>
+          <div class="form-row">
+            <label for="playerName" class="sr-only">Player name</label>
+            <input
+              type="text"
+              id="playerName"
+              class="input"
+              placeholder="Your name"
+            />
+            <button id="startGameBtn" class="btn">Start Game</button>
+          </div>
         </div>
 
-        <div class="question-block" id="story-box"></div>
-        <pre class="code-block" id="code-block"></pre>
+        <!-- Question / play area -->
+        <div id="gameArea" class="sub-card">
+          <div class="sub-card-header">
+            <h3 class="sub-card-title" id="levelInfo">
+              Player Level 1 – Question 1 / 3
+            </h3>
+            <p class="sub-card-meta">
+              Score: <span id="scoreDisplay">0</span>
+            </p>
+          </div>
 
-        <div class="choices" id="choices"></div>
-        <div class="feedback" id="feedback"></div>
+          <p id="scenarioText" class="scenario-text">
+            A bridge can only hold weight &lt;= 100. yourWeight = 95.
+          </p>
 
-        <button class="btn primary-btn next-button hidden" id="next-button" type="button">Next Question</button>
+          <pre id="codeSnippet" class="code-block">
+if (yourWeight &lt;= 100) {
+  crossBridge();
+}</pre>
+
+          <div id="choiceButtons" class="button-row">
+            <button class="btn btn-choice" data-choice="0">
+              Cross the bridge.
+            </button>
+            <button class="btn btn-choice" data-choice="1">
+              Find another path.
+            </button>
+          </div>
+
+          <button id="nextQuestionBtn" class="btn btn-small" disabled>
+            Next Question
+          </button>
+        </div>
+
+        <!-- Game over box -->
+        <div id="gameOver" class="sub-card sub-card-highlight" hidden>
+          <h3 class="sub-card-title">Game Over</h3>
+          <p>Player: <span id="finalPlayerName">—</span></p>
+          <p>Final Score: <span id="finalScore">0</span></p>
+
+          <div class="button-row">
+            <button id="saveScoreBtn" class="btn">
+              Save Score to Leaderboard
+            </button>
+            <button id="playAgainBtn" class="btn btn-outline">
+              Play Again
+            </button>
+          </div>
+        </div>
       </section>
 
-      <!-- Game over summary panel -->
-      <section class="panel summary-panel hidden" id="summary-panel">
-        <h2>Game Over</h2>
-        <p><strong>Player:</strong> <span id="summary-player"></span></p>
-        <p><strong>Final Score:</strong> <span id="summary-score"></span></p>
-        <div class="summary-actions">
-          <button class="btn primary-btn" id="save-score" type="button">Save Score to Leaderboard</button>
-          <button class="btn ghost-btn" id="play-again" type="button">Play Again</button>
-        </div>
-        <p class="helper-text" id="save-message" aria-live="polite"></p>
-      </section>
-    </main>
+      <!-- RIGHT: Directions + Leaderboard -->
+      <aside class="sidebar">
+        <!-- Directions -->
+        <section class="card">
+          <header class="card-header">
+            <h2 class="card-title">How to Play</h2>
+          </header>
+          <ol class="info-list">
+            <li>Enter your name and press <strong>Start Game</strong>.</li>
+            <li>
+              Read the <strong>scenario</strong> and look at the
+              <strong>if / else code</strong>.
+            </li>
+            <li>
+              Choose the option that matches what the code will do
+              (<em>not</em> what you would do in real life).
+            </li>
+            <li>
+              Correct answers increase your score. Try to clear all questions!
+            </li>
+            <li>
+              When the game ends, save your score to the leaderboard and try to
+              beat it.
+            </li>
+          </ol>
+        </section>
 
-    <!-- Leaderboard panel: shows saved scores from localStorage -->
-    <section class="panel leaderboard-panel hidden" id="leaderboard-panel">
-      <div class="leaderboard-header">
-        <div>
-          <h2>Leaderboard</h2>
-          <p class="leaderboard-note">Scores are stored locally in this browser.</p>
-        </div>
-        <button class="btn ghost-btn leaderboard-close" id="leaderboard-close" type="button">Close</button>
-      </div>
-      <ol class="leaderboard-table" id="leaderboard-list"></ol>
+        <!-- Leaderboard card (always visible summary) -->
+        <section class="card">
+          <header class="card-header">
+            <h2 class="card-title">Leaderboard</h2>
+            <p class="card-subtitle small">
+              Scores are stored locally in this browser.
+            </p>
+          </header>
+
+          <ol id="leaderboardList" class="leaderboard-list">
+            <!-- Filled by JS -->
+          </ol>
+
+          <button id="clearLeaderboardBtn" class="btn btn-small btn-danger">
+            Clear Leaderboard
+          </button>
+        </section>
+      </aside>
     </section>
-  </div>
-
-  <!-- JavaScript: game logic, rendering, and leaderboard storage -->
-  <script src="if_else_escape.js"></script>
+  </main>
 </body>
 </html>
