@@ -187,6 +187,9 @@ body {
   margin-bottom: 20px;
 }
 
+.cs-game-list button,
+.cs-game-list a {
+  display: block;
 .cs-game-list button {
   width: 100%;
   padding: 12px 16px;
@@ -197,6 +200,12 @@ body {
   font-weight: 600;
   cursor: pointer;
   transition: background 0.2s ease, transform 0.2s ease;
+  text-decoration: none;
+  text-align: center;
+}
+
+.cs-game-list button:hover,
+.cs-game-list a:hover {
 }
 
 .cs-game-list button:hover {
@@ -234,6 +243,261 @@ body {
   box-shadow: 0 6px 14px rgba(0, 194, 255, 0.35);
 }
 
+/* Utility class to hide panels */
+.hidden {
+  display: none;
+}
+
+/* If / Else Escape page header */
+.game-header {
+  background: #0b1324;
+  padding: 24px 0;
+  border-bottom: 1px solid #1f2a44;
+}
+
+.game-header-content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.game-header h1 {
+  margin: 0;
+  color: #57d3ff;
+}
+
+.game-subtitle {
+  margin: 6px 0 10px;
+  color: #c7d4ea;
+}
+
+.back-link {
+  color: #9fffcf;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.back-link:hover {
+  color: #57d3ff;
+}
+
+.leaderboard-toggle {
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: 1px solid #2a3b5e;
+  background: #111f38;
+  color: #e6f1ff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Shared panel styling for setup, game, and summary */
+.panel {
+  margin: 32px auto;
+  padding: 24px;
+  border-radius: 16px;
+  border: 1px solid #1f2a44;
+  background: #111a2e;
+  box-shadow: 0 12px 22px rgba(0, 0, 0, 0.35);
+  max-width: 720px;
+}
+
+.panel h2 {
+  margin-top: 0;
+  color: #9fffcf;
+}
+
+.panel input {
+  width: 100%;
+  margin: 12px 0 16px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #2a3b5e;
+  background: #0b1324;
+  color: #e6f1ff;
+}
+
+.panel button {
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: none;
+  background: linear-gradient(135deg, #1b7bff, #00c2ff);
+  color: #ffffff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.helper-text {
+  margin-top: 12px;
+  color: #f5b2b2;
+}
+
+.helper-text.success {
+  color: #66f7a9;
+}
+
+/* Game panel layout */
+.game-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.score-box {
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: #0b1324;
+  border: 1px solid #2a3b5e;
+  text-align: center;
+}
+
+.score-box p {
+  margin: 4px 0;
+}
+
+.level-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.level-1 {
+  background: rgba(80, 200, 120, 0.2);
+  color: #66f7a9;
+}
+
+.level-2 {
+  background: rgba(255, 200, 90, 0.2);
+  color: #ffd27a;
+}
+
+.level-3 {
+  background: rgba(255, 100, 100, 0.2);
+  color: #ff9a9a;
+}
+
+.story-box {
+  margin: 20px 0 12px;
+  padding: 14px;
+  background: #0b1324;
+  border-radius: 10px;
+  border: 1px solid #2a3b5e;
+}
+
+.code-block {
+  margin: 0 0 20px;
+  padding: 16px;
+  background: #0b0f1a;
+  border-radius: 10px;
+  border: 1px solid #1f2a44;
+  font-family: "Courier New", Courier, monospace;
+  color: #9fffcf;
+  white-space: pre-wrap;
+}
+
+.choices {
+  display: grid;
+  gap: 12px;
+}
+
+.choices button {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 1px solid #2a3b5e;
+  background: #111f38;
+  color: #e6f1ff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.choices button:hover {
+  background: #1b2b4b;
+  transform: translateY(-1px);
+}
+
+.choices button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.feedback {
+  margin-top: 16px;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+}
+
+.feedback.correct {
+  background: rgba(80, 200, 120, 0.15);
+  border-color: rgba(80, 200, 120, 0.5);
+  color: #66f7a9;
+}
+
+.feedback.incorrect {
+  background: rgba(255, 100, 100, 0.15);
+  border-color: rgba(255, 100, 100, 0.5);
+  color: #ff9a9a;
+}
+
+.level-complete {
+  margin-top: 8px;
+  color: #ffd27a;
+}
+
+.next-button {
+  margin-top: 18px;
+}
+
+.summary-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+/* Leaderboard panel styles */
+.leaderboard-panel {
+  position: fixed;
+  top: 120px;
+  right: 24px;
+  width: min(320px, 90%);
+  background: #111a2e;
+  border: 1px solid #1f2a44;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 14px 24px rgba(0, 0, 0, 0.4);
+  z-index: 15;
+}
+
+.leaderboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.leaderboard-close {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid #2a3b5e;
+  background: #0b1324;
+  color: #e6f1ff;
+  cursor: pointer;
+}
+
+.leaderboard-panel ol {
+  margin: 0;
+  padding-left: 20px;
+  color: #e6f1ff;
+}
+
 /* Responsive layout for small screens */
 @media (max-width: 900px) {
   .game-grid {
@@ -244,6 +508,11 @@ body {
   .game-card {
     width: 100%;
     max-width: 360px;
+  }
+
+  .leaderboard-panel {
+    position: static;
+    margin: 20px auto;
   }
 }
 
