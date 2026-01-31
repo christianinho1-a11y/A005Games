@@ -129,6 +129,111 @@ body {
   box-shadow: 0 6px 14px rgba(0, 194, 255, 0.45);
 }
 
+/* Popup overlay container: hidden until .active is added */
+.cs-modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 20;
+}
+
+/* Shows the modal and enables clicking */
+.cs-modal.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Full-screen dark overlay behind the popup */
+.cs-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(5, 10, 20, 0.75);
+  backdrop-filter: blur(2px);
+}
+
+/* Centered popup panel styling */
+.cs-modal-panel {
+  position: relative;
+  z-index: 1;
+  width: min(420px, 90%);
+  background: #0f172a;
+  border: 1px solid #1f2a44;
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+.cs-modal-panel h3 {
+  margin-top: 0;
+  color: #57d3ff;
+}
+
+.cs-modal-subtitle {
+  margin: 8px 0 20px;
+  color: #c7d4ea;
+  font-size: 0.95rem;
+}
+
+/* Game list buttons inside the popup */
+.cs-game-list {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.cs-game-list button {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 1px solid #2a3b5e;
+  background: #111f38;
+  color: #e6f1ff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.cs-game-list button:hover {
+  background: #1b2b4b;
+  transform: translateY(-1px);
+}
+
+/* Close buttons (top-right icon and bottom button) */
+.cs-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 50%;
+  background: #1b2b4b;
+  color: #e6f1ff;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.cs-modal-close-btn {
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: none;
+  background: linear-gradient(135deg, #1b7bff, #00c2ff);
+  color: #ffffff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.cs-modal-close-btn:hover,
+.cs-modal-close:hover {
+  box-shadow: 0 6px 14px rgba(0, 194, 255, 0.35);
+}
+
 /* Responsive layout for small screens */
 @media (max-width: 900px) {
   .game-grid {
