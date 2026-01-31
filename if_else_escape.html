@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>If / Else Escape – CS Mini Game</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Header for the mini game page -->
+  <header class="game-header">
+    <div class="container game-header-content">
+      <div>
+        <h1>If / Else Escape</h1>
+        <p class="game-subtitle">Concept: Conditionals &amp; Decision Making</p>
+        <a class="back-link" href="index.html">⬅ Back to Hub</a>
+      </div>
+      <button class="leaderboard-toggle" id="leaderboard-toggle" type="button">Leaderboard</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Player setup panel: shown before the game starts -->
+    <section class="panel" id="setup-panel">
+      <h2>Start Game</h2>
+      <label for="player-name">Enter your name to begin:</label>
+      <input id="player-name" type="text" placeholder="Your name" />
+      <button id="start-game" type="button">Start Game</button>
+      <p class="helper-text" id="name-error" aria-live="polite"></p>
+    </section>
+
+    <!-- Game panel: shown after the player enters a name -->
+    <section class="panel hidden" id="game-panel">
+      <div class="game-meta">
+        <div>
+          <p><strong>Player:</strong> <span id="player-display"></span></p>
+          <p><strong>Level:</strong> <span id="level-display" class="level-badge"></span></p>
+          <p><strong>Question:</strong> <span id="question-display"></span></p>
+        </div>
+        <div class="score-box">
+          <p><strong>Score</strong></p>
+          <p id="score-display">0</p>
+        </div>
+      </div>
+
+      <div class="story-box" id="story-box"></div>
+      <pre class="code-block" id="code-block"></pre>
+
+      <div class="choices" id="choices"></div>
+      <div class="feedback" id="feedback"></div>
+
+      <button class="next-button hidden" id="next-button" type="button">Next Question</button>
+    </section>
+
+    <!-- Game over summary panel -->
+    <section class="panel hidden" id="summary-panel">
+      <h2>Game Over</h2>
+      <p><strong>Player:</strong> <span id="summary-player"></span></p>
+      <p><strong>Final Score:</strong> <span id="summary-score"></span></p>
+      <div class="summary-actions">
+        <button id="save-score" type="button">Save Score to Leaderboard</button>
+        <button id="play-again" type="button">Play Again</button>
+      </div>
+      <p class="helper-text" id="save-message" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <!-- Leaderboard panel: shows saved scores from localStorage -->
+  <aside class="leaderboard-panel hidden" id="leaderboard-panel">
+    <div class="leaderboard-header">
+      <h2>Leaderboard</h2>
+      <button class="leaderboard-close" id="leaderboard-close" type="button">Close</button>
+    </div>
+    <ol id="leaderboard-list"></ol>
+  </aside>
+
+  <!-- JavaScript: game logic, rendering, and leaderboard storage -->
+  <script src="if_else_escape.js"></script>
+</body>
+</html>
