@@ -2,107 +2,118 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CS, Cyber &amp; IT Games Hub</title>
+  <title>IT & CS Games Hub</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
-  <!-- Site header with name and tagline -->
-  <header class="site-header">
-    <div class="container">
-      <h1>CS, Cyber &amp; IT Games Hub</h1>
-      <p class="tagline">Learn. Play. Secure.</p>
-    </div>
-  </header>
+<body class="cs-body">
+  <main class="page-wrap">
+    <!-- Top hero -->
+    <header class="page-header">
+      <div>
+        <h1 class="page-title">IT &amp; CS Games Hub</h1>
+        <p class="page-subtitle">
+          Practice computer science concepts through quick, classroom-friendly mini games.
+        </p>
+      </div>
+      <div class="hub-meta">
+        <span class="tag">High School</span>
+        <span class="tag">Warm-ups</span>
+        <span class="tag">Review</span>
+      </div>
+    </header>
 
-  <!-- Navigation bar (placeholder links) -->
-  <nav class="site-nav">
-    <div class="container">
-      <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Games</a></li>
-        <li><a href="#">Leaderboard</a></li>
-        <li><a href="#">Admin</a></li>
+    <!-- Intro -->
+    <section class="card hub-intro">
+      <div class="hub-intro-text">
+        <h2 class="card-title">Choose a Game</h2>
+        <p class="card-subtitle">
+          Each game focuses on a different CS or IT concept. Scores are stored in the browser,
+          so students can try to beat their own high scores.
+        </p>
+      </div>
+      <ul class="hub-keypoints">
+        <li>No logins needed – runs in the browser.</li>
+        <li>Designed for whole-class play or independent practice.</li>
+        <li>Dark “tech” theme for the lab or projector.</li>
       </ul>
-    </div>
-  </nav>
-
-  <!-- Main content area with game cards -->
-  <main class="container">
-    <section class="game-grid">
-      <!-- Computer Science card -->
-      <article class="game-card card-cs">
-        <h2>Computer Science</h2>
-        <p>Logic, coding, and problem-solving games to grow your skills.</p>
-        <button id="cs-play-btn" type="button">Play</button>
-      </article>
-
-      <!-- Cyber Security card -->
-      <article class="game-card card-cyber">
-        <h2>Cyber Security</h2>
-        <p>Defense, hacking awareness, and safety challenges for smart browsing.</p>
-        <button type="button">Play</button>
-      </article>
-
-      <!-- Information Technology card -->
-      <article class="game-card card-it">
-        <h2>Information Technology</h2>
-        <p>Hardware, networking, and troubleshooting missions for tech helpers.</p>
-        <button type="button">Play</button>
-      </article>
     </section>
-  </main>
 
-  <!-- Footer area -->
-  <footer class="site-footer">
-    <div class="container">
-      <p>Built for Computer Science &amp; IT Classrooms</p>
-    </div>
-  </footer>
+    <!-- Game grid -->
+    <section class="game-grid">
+      <!-- If / Else Escape -->
+      <a href="if_else_escape.html" class="card game-card">
+        <div class="game-card-header">
+          <h2 class="game-card-title">// If / Else Escape</h2>
+          <span class="game-tag">Conditionals</span>
+        </div>
+        <p class="game-card-text">
+          Make decisions based on <code>if</code>, <code>else if</code>, and
+          <code>else</code>. Choose the path that matches what the code will do.
+        </p>
+        <p class="game-card-meta">Mode: Single-player • Est. 5–10 minutes</p>
+      </a>
 
-  <!-- Popup HTML: Computer Science games menu (hidden until Play is clicked) -->
-  <div class="cs-modal" id="cs-modal">
-    <!-- The overlay dims/blurs the page behind the popup -->
-    <div class="cs-modal-backdrop" data-close="true"></div>
-
-    <!-- Centered popup panel -->
-    <div class="cs-modal-panel" role="dialog" aria-modal="true" aria-labelledby="cs-modal-title">
-      <button class="cs-modal-close" type="button" data-close="true" aria-label="Close menu">
-        &times;
-      </button>
-      <h3 id="cs-modal-title">Computer Science Games</h3>
-      <p class="cs-modal-subtitle">Choose a game to play (coming soon!)</p>
-
-      <div class="cs-game-list">
-        <a class="cs-game-link" href="if_else_escape.html">If / Else Escape</a>
-        <button type="button">If / Else Escape</button>
-        <button type="button">Boolean Battle</button>
-        <button type="button">Binary Blaster</button>
-        <button type="button">CS Wordle</button>
-        <button type="button">CS Connections</button>
-        <button type="button">CS Tenable</button>
+      <!-- Boolean Battle (placeholder) -->
+      <div class="card game-card game-card-disabled">
+        <div class="game-card-header">
+          <h2 class="game-card-title">Boolean Battle</h2>
+          <span class="game-tag game-tag-disabled">Coming soon</span>
+        </div>
+        <p class="game-card-text">
+          True vs. False showdown using logical operators (<code>&amp;&amp;</code>,
+          <code>||</code>, <code>!</code>). Practice boolean expressions.
+        </p>
+        <p class="game-card-meta">Status: In development</p>
       </div>
 
-      <button class="cs-modal-close-btn" type="button" data-close="true">Close</button>
-    </div>
-  </div>
+      <!-- Binary Blaster (placeholder) -->
+      <div class="card game-card game-card-disabled">
+        <div class="game-card-header">
+          <h2 class="game-card-title">Binary Blaster</h2>
+          <span class="game-tag game-tag-disabled">Coming soon</span>
+        </div>
+        <p class="game-card-text">
+          Convert between binary and decimal under time pressure. Great for quick
+          number-systems warm-ups.
+        </p>
+        <p class="game-card-meta">Status: In development</p>
+      </div>
 
-  <!-- JavaScript: toggles the popup menu open and closed -->
-  <script>
-    const csPlayButton = document.querySelector("#cs-play-btn");
-    const csModal = document.querySelector("#cs-modal");
+      <!-- Wordle / Connections / Tenable placeholders -->
+      <div class="card game-card game-card-disabled">
+        <div class="game-card-header">
+          <h2 class="game-card-title">CS Wordle</h2>
+          <span class="game-tag game-tag-disabled">Coming soon</span>
+        </div>
+        <p class="game-card-text">
+          Guess a 5-letter computer science term in six tries, just like the original Wordle.
+        </p>
+        <p class="game-card-meta">Status: In development</p>
+      </div>
 
-    // Open the menu when the Computer Science Play button is clicked.
-    csPlayButton.addEventListener("click", () => {
-      csModal.classList.add("active");
-    });
+      <div class="card game-card game-card-disabled">
+        <div class="game-card-header">
+          <h2 class="game-card-title">Tech Connections</h2>
+          <span class="game-tag game-tag-disabled">Coming soon</span>
+        </div>
+        <p class="game-card-text">
+          Group related IT / CS terms into sets of four. Builds vocabulary and concept mapping.
+        </p>
+        <p class="game-card-meta">Status: In development</p>
+      </div>
 
-    // Close the menu when the close button or overlay is clicked.
-    csModal.addEventListener("click", (event) => {
-      if (event.target.matches("[data-close='true']")) {
-        csModal.classList.remove("active");
-      }
-    });
-  </script>
+      <div class="card game-card game-card-disabled">
+        <div class="game-card-header">
+          <h2 class="game-card-title">Tenable Top 10</h2>
+          <span class="game-tag game-tag-disabled">Coming soon</span>
+        </div>
+        <p class="game-card-text">
+          Guess the top 10 items in fun tech categories (programming languages, companies, etc.).
+        </p>
+        <p class="game-card-meta">Status: In development</p>
+      </div>
+    </section>
+  </main>
 </body>
 </html>
+
