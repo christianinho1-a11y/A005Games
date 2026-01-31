@@ -7,7 +7,7 @@
   <script defer src="if_else_escape.js"></script>
 </head>
 <body class="cs-body">
-    <a href="cs_games.html" class="back-link">← Back to CS Games</a>
+  <a href="cs_games.html" class="back-link">← Back to CS Games</a>
 
   <main class="page-wrap">
     <!-- Top title + concept tag -->
@@ -32,8 +32,9 @@
         <header class="card-header">
           <h2 class="card-title">Play the Game</h2>
           <p class="card-subtitle">
-            Read the code and scenario, then choose the option that matches what
-            the program will do.
+            You have <strong>3 lives</strong>. Answer questions about
+            <code>if</code>, <code>else if</code>, and <code>else</code>.
+            Every 10 questions, you move up a level.
           </p>
         </header>
 
@@ -56,10 +57,13 @@
         <div id="gameArea" class="sub-card" hidden>
           <div class="sub-card-header">
             <h3 class="sub-card-title" id="levelInfo">
-              Level 1 – Question 1 / 5
+              Level 1 – Question 1 / 50
             </h3>
             <p class="sub-card-meta">
               Score: <span id="scoreDisplay">0</span>
+            </p>
+            <p class="sub-card-meta">
+              Lives: <span id="livesDisplay">❤❤❤</span>
             </p>
           </div>
 
@@ -112,15 +116,16 @@
             </li>
             <li>
               Choose the option that matches what the code will actually do,
-              not what you personally would do.
+              not what you would do in real life.
             </li>
             <li>
-              Correct answers earn you 1 point. Try to get the highest score
-              across all questions.
+              You have <strong>3 lives</strong>. A wrong answer costs
+              <strong>1 life</strong>.
             </li>
             <li>
-              At the end, save your score to the leaderboard and try again to
-              beat it.
+              Every <strong>10 questions</strong>, your level increases.
+              You’ll face up to <strong>50 questions</strong> selected at random
+              from a bank of 100.
             </li>
           </ol>
         </section>
@@ -147,4 +152,5 @@
   </main>
 </body>
 </html>
+
 
