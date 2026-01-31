@@ -32,9 +32,9 @@
         <header class="card-header">
           <h2 class="card-title">Escape the Logic Lab</h2>
           <p class="card-subtitle">
-            You're locked in a virtual lab. Each puzzle is an
+            You're locked in a virtual CS lab. Each puzzle is an
             <code>if / else</code> scenario. Answer correctly to move through
-            rooms. Every 5 puzzles, you hit a checkpoint.
+            rooms. Every 5 puzzles, you reach a checkpoint.
           </p>
         </header>
 
@@ -51,7 +51,7 @@
             />
 
             <label for="levelSelect" class="sr-only">Level</label>
-            <select id="levelSelect" class="input" style="max-width: 210px;">
+            <select id="levelSelect" class="input" style="max-width: 220px;">
               <option value="1">Level 1 – Intro CS (1 pt/Q)</option>
               <option value="2">Level 2 – AP CSP (2 pts/Q)</option>
               <option value="3">Level 3 – AP CSA (3 pts/Q)</option>
@@ -137,16 +137,13 @@
                 <li><strong>Level 1:</strong> Intro to Computer Science</li>
                 <li><strong>Level 2:</strong> AP Computer Science Principles</li>
                 <li><strong>Level 3:</strong> AP Computer Science A</li>
-                <li><strong>Level 4:</strong> Honors Advanced Data Structures & Algorithms</li>
+                <li><strong>Level 4:</strong> Honors Data Structures &amp; Algorithms</li>
                 <li><strong>Level 5:</strong> College-level Computer Science</li>
               </ul>
             </li>
             <li>
-              Each level uses harder and more confusing conditional logic as you
-              go deeper into the escape room.
-            </li>
-            <li>
-              Higher levels are worth more points per correct answer:
+              Higher levels get trickier logic and are worth more points per
+              correct answer:
               <strong>L1 = 1 pt</strong>,
               <strong>L2 = 2 pts</strong>,
               <strong>L3 = 3 pts</strong>,
@@ -155,18 +152,22 @@
             </li>
             <li>
               Read the <strong>scenario</strong> and the
-              <strong>if / else code</strong>. Choose what the code will
-              actually do (not what you personally would do).
+              <strong>if / else code</strong>. The code block shows the
+              <strong>current variable values</strong> at the top.
+            </li>
+            <li>
+              Choose what the code will actually do for those values (not what
+              you personally would do).
             </li>
             <li>
               You have <strong>3 lives</strong>. A wrong answer costs
               <strong>1 life</strong>.
             </li>
             <li>
-              Every <strong>5 questions</strong>, you reach a
-              <strong>checkpoint</strong>. If you lose all lives later, you can
+              Every <strong>5 questions</strong> you reach a
+              <strong>checkpoint</strong>. If you lose all lives, you can
               restart from your last checkpoint with full lives, but your score
-              and progress after that checkpoint are lost.
+              beyond that checkpoint resets.
             </li>
             <li>
               Each escape run uses up to <strong>20 questions</strong> for that
@@ -197,3 +198,4 @@
   </main>
 </body>
 </html>
+
