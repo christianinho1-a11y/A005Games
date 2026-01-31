@@ -6,17 +6,17 @@ const MAX_LIVES = 3;
 const QUESTIONS_PER_GAME = 20; // 4 rooms * 5 puzzles each
 const LEADERBOARD_KEY = "if_else_escape_leaderboard";
 
-// ----- Question bank (grouped by difficulty) -----
+// ----- Story-based question bank -----
 //
-// We roughly group questions so that higher indices are more confusing / complex.
-// We'll map slices of this array to levels, and within each level
-// we escalate difficulty as players go deeper into the "rooms".
+// Grouped roughly by difficulty slices for levels:
+// Level 1 → Intro CS-style conditionals
+// Level 2 → AP CSP-style if/else
+// Level 3 → AP CSA-style else-if chains
+// Level 4 → Honors DSA-style &&, ||, !
+// Level 5 → College-ish combined / nested logic
 //
-// Level 1 → easiest questions (intro CS-style conditionals)
-// Level 2 → simple if/else, booleans (AP CSP)
-// Level 3 → else-if chains, ranges (AP CSA)
-// Level 4 → multi-condition logic &&, ||, ! (Honors DSA)
-// Level 5 → nested & combined logic (college-level)
+// The generator will slice this array into 5 bands and then further split
+// each band into harder "rooms" within that level.
 
 const IF_ELSE_QUESTIONS = [
   // ---------------------------
@@ -52,7 +52,7 @@ const IF_ELSE_QUESTIONS = [
   },
   {
     scenario:
-      "A glowing floor tile says: 'STEP ONLY IF ENERGY == 100.' Your energy is exactly 100.",
+      "A glowing floor tile says: 'STEP ONLY IF ENERGY == 100.' Your energy is exactly 100. energy = 100.",
     code: `if (energy == 100) {
   safeToStep = true;
 }`,
@@ -931,8 +931,6 @@ const IF_ELSE_QUESTIONS = [
   }
 ];
 
-  
-
 // ----- State -----
 
 let currentQuestionIndex = 0;        // index within questionOrder
@@ -947,7 +945,7 @@ let selectedLevel = 1;
 let pointsPerQuestion = 1;
 
 // checkpoint state
-let checkpointIndex = 0;   // where we restart from (questionOrder index)
+let checkpointIndex = 0;   // index in questionOrder where we restart
 let checkpointScore = 0;
 
 // ----- DOM helper -----
@@ -1023,7 +1021,7 @@ function renderLeaderboard(entries = loadLeaderboard()) {
   });
 }
 
-// ----- Game helpers -----
+// ----- Helpers -----
 
 function renderLives() {
   const el = $("livesDisplay");
@@ -1053,6 +1051,19 @@ function updateQuestionAndRoomDisplay() {
   $("levelInfo").textContent = `Level ${selectedLevel} – Room ${roomNumber} of ${totalRooms}`;
 }
 
+// Extract patterns like "coins = 150" or "hasMap = true" from scenario text
+function extractAssignmentsFromScenario(scenarioText) {
+  const assignments = [];
+  const regex = /([a-zA-Z_][a-zA-Z0-9_]*)\s*=\s*([^\s,.]+)/g;
+  let match;
+  while ((match = regex.exec(scenarioText)) !== null) {
+    const name = match[1];
+    const value = match[2];
+    assignments.push(`${name} = ${value}`);
+  }
+  return assignments;
+}
+
 // Fisher–Yates shuffle
 function shuffleArray(arr) {
   for (let i = arr.length - 1; i > 0; i--) {
@@ -1065,7 +1076,7 @@ function shuffleArray(arr) {
 /**
  * Difficulty mapping:
  * We split the full bank into 5 difficulty slices for levels,
- * then split each slice into 4 "rooms" (groups of indices).
+ * then split each slice into up to 4 "rooms" (groups of indices).
  * Inside each group, we shuffle, but later rooms use higher indices,
  * so they tend to be more confusing.
  */
@@ -1083,7 +1094,6 @@ function generateQuestionOrderForLevel() {
     levelIndices.push(i);
   }
 
-  // Now split this level slice into up to 4 "rooms", increasing in difficulty.
   const groups = 4;
   const totalLevelQuestions = levelIndices.length;
   const baseGroupSize = Math.max(1, Math.floor(totalLevelQuestions / groups));
@@ -1092,9 +1102,10 @@ function generateQuestionOrderForLevel() {
   for (let g = 0; g < groups; g++) {
     const gStart = g * baseGroupSize;
     if (gStart >= totalLevelQuestions) break;
-    const gEnd = g === groups - 1
-      ? totalLevelQuestions
-      : Math.min(totalLevelQuestions, gStart + baseGroupSize);
+    const gEnd =
+      g === groups - 1
+        ? totalLevelQuestions
+        : Math.min(totalLevelQuestions, gStart + baseGroupSize);
 
     const groupSlice = levelIndices.slice(gStart, gEnd);
     shuffleArray(groupSlice); // random inside each room, but rooms get harder
@@ -1114,7 +1125,6 @@ function resetGame() {
   scoreSavedForThisGame = false;
   livesLeft = MAX_LIVES;
 
-  // starting checkpoint is "before room 1"
   checkpointIndex = 0;
   checkpointScore = 0;
 
@@ -1166,7 +1176,16 @@ function loadQuestion() {
   }
 
   $("scenarioText").textContent = q.scenario;
-  $("codeSnippet").textContent = q.code;
+
+  // Show current values above the code, extracted from the scenario
+  const assignments = extractAssignmentsFromScenario(q.scenario);
+  let codeToShow = q.code;
+  if (assignments.length > 0) {
+    const headerLines = ["// Current values:", ...assignments];
+    codeToShow = headerLines.join("\n") + "\n\n" + q.code;
+  }
+
+  $("codeSnippet").textContent = codeToShow;
 
   const container = $("choiceButtons");
   container.innerHTML = "";
@@ -1218,14 +1237,11 @@ function onChoiceClick(event) {
     livesLeft -= 1;
     renderLives();
     if (livesLeft <= 0) {
-      // no lives → trapped
       showEndScreen("trap");
       return;
     }
   }
 
-  // If still alive, and we just completed a checkpoint (every 5 questions),
-  // update checkpoint state.
   const questionNumber = currentQuestionIndex + 1;
   if (livesLeft > 0 && questionNumber % 5 === 0) {
     checkpointIndex = currentQuestionIndex + 1; // start of next room
@@ -1277,7 +1293,6 @@ function showEndScreen(mode) {
         "You hit a trap before reaching any checkpoint. Try the escape again from the start of the level.";
       continueBtn.hidden = true;
     }
-    // You can still save your score if you want.
     saveBtn.disabled = false;
   }
 
@@ -1356,3 +1371,4 @@ document.addEventListener("DOMContentLoaded", () => {
   if (continueCheckpointBtn)
     continueCheckpointBtn.addEventListener("click", continueFromCheckpoint);
 });
+
