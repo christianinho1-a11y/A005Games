@@ -190,6 +190,7 @@ body {
 .cs-game-list button,
 .cs-game-list a {
   display: block;
+.cs-game-list button {
   width: 100%;
   padding: 12px 16px;
   border-radius: 10px;
@@ -205,6 +206,9 @@ body {
 
 .cs-game-list button:hover,
 .cs-game-list a:hover {
+}
+
+.cs-game-list button:hover {
   background: #1b2b4b;
   transform: translateY(-1px);
 }
