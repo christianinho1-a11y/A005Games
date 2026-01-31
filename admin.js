@@ -1,12 +1,11 @@
+
 // admin.js
 
 const ADMIN_CODE = "A005";
 const GAME_REGISTRY_KEY = "cs_games_registry";
 
-// In-memory cache of games
 let games = [];
 
-// Basic DOM helper
 function $(id) {
   return document.getElementById(id);
 }
@@ -36,15 +35,11 @@ function saveRegistry() {
   }
 }
 
-// Generate a stable game ID from file name
 function makeGameIdFromFile(fileName) {
-  // remove extension
   const noExt = fileName.replace(/\.[^.]+$/, "");
-  // lowercase + non-alphanumeric → underscore
   return noExt.toLowerCase().replace(/[^a-z0-9]+/g, "_");
 }
 
-// Render list of games
 function renderGameList() {
   const list = $("gameList");
   if (!list) return;
@@ -167,7 +162,6 @@ function addGameFromForm() {
   const id = makeGameIdFromFile(fileName);
   const leaderboardKey = `${id}_leaderboard`;
 
-  // Check for duplicate file or id
   if (games.some((g) => g.id === id)) {
     const overwrite = confirm(
       `A game with ID "${id}" already exists. Overwrite its info?`
@@ -202,7 +196,7 @@ function deleteGame(gameId) {
   const game = games.find((g) => g.id === gameId);
   if (!game) return;
 
-  const confirmMsg = `Remove "${game.name}" from the registry?\n\n(This does NOT delete the HTML file. It only removes the metadata and admin controls.)`;
+  const confirmMsg = `Remove "${game.name}" from the registry?\n\n(This does NOT delete the HTML/JS files. It only removes the metadata and admin controls.)`;
   if (!confirm(confirmMsg)) return;
 
   games = games.filter((g) => g.id !== gameId);
@@ -218,7 +212,6 @@ function handleLogin() {
   const entered = (codeInput.value || "").trim();
 
   if (entered === ADMIN_CODE) {
-    // Success
     sessionStorage.setItem("cs_games_admin_logged_in", "true");
     showAdmin();
   } else {
@@ -244,7 +237,6 @@ function showAdmin() {
   if (adminSection) adminSection.hidden = false;
   if (errorEl) errorEl.style.display = "none";
 
-  // Load games & render
   loadRegistry();
   renderGameList();
 }
@@ -258,9 +250,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (loginBtn) loginBtn.addEventListener("click", handleLogin);
   if (addGameBtn) addGameBtn.addEventListener("click", addGameFromForm);
-  if (clearAllLbBtn) clearAllLbBtn.addEventListener("click", clearAllLeaderboards);
+  if (clearAllLbBtn)
+    clearAllLbBtn.addEventListener("click", clearAllLeaderboards);
 
-  // Allow pressing Enter to login
   const codeInput = $("adminCodeInput");
   if (codeInput) {
     codeInput.addEventListener("keyup", (e) => {
