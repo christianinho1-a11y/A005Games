@@ -1,0 +1,124 @@
+/* Base page styling */
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #0b0f1a;
+  color: #e6f1ff;
+}
+
+/* Shared layout container */
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Header area */
+.site-header {
+  background: #060b14;
+  padding: 32px 0 20px;
+  text-align: center;
+  border-bottom: 2px solid #0f6fff;
+}
+
+.site-header h1 {
+  margin: 0;
+  font-size: 2.2rem;
+  color: #57d3ff;
+}
+
+.tagline {
+  margin: 8px 0 0;
+  font-size: 1.1rem;
+  color: #9fffcf;
+}
+
+/* Navigation bar */
+.site-nav {
+  background: #0f1524;
+  border-bottom: 1px solid #1f2a44;
+}
+
+.site-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 12px 0;
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+}
+
+.site-nav a {
+  color: #e6f1ff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.site-nav a:hover {
+  color: #57d3ff;
+}
+
+/* Welcome section */
+.welcome {
+  text-align: center;
+  margin: 40px 0 30px;
+}
+
+.welcome h2 {
+  margin-bottom: 10px;
+  color: #57d3ff;
+}
+
+/* Game cards layout */
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-bottom: 50px;
+}
+
+.game-card {
+  background: #111a2e;
+  border: 1px solid #1f2a44;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+.game-card h3 {
+  margin-top: 0;
+  color: #9fffcf;
+}
+
+.game-card p {
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+/* Button styling */
+.game-card button {
+  margin-top: 16px;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #0f6fff, #00c2ff);
+  color: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.game-card button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 194, 255, 0.4);
+}
+
+/* Footer area */
+.site-footer {
+  background: #060b14;
+  padding: 20px 0;
+  text-align: center;
+  border-top: 1px solid #1f2a44;
+  color: #9fb4d1;
+}
