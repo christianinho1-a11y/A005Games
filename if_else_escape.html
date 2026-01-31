@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>If / Else Escape</title>
+  <title>If / Else Escape Room</title>
   <link rel="stylesheet" href="style.css" />
   <script defer src="if_else_escape.js"></script>
 </head>
@@ -13,10 +13,10 @@
     <!-- Top title + concept tag -->
     <header class="page-header">
       <div>
-        <h1 class="page-title">// If / Else Escape</h1>
+        <h1 class="page-title">// If / Else Escape Room</h1>
         <p class="page-subtitle">
           Concept: <span class="tag">Conditionals</span>
-          <span class="tag">Decision Making</span>
+          <span class="tag">Logic Puzzles</span>
         </p>
       </div>
 
@@ -30,17 +30,17 @@
       <!-- LEFT: Game card -->
       <section class="card card-main">
         <header class="card-header">
-          <h2 class="card-title">Play the Game</h2>
+          <h2 class="card-title">Escape the Logic Lab</h2>
           <p class="card-subtitle">
-            Choose a level, answer conditional logic questions, and try to
-            escape with all your lives. Higher levels are harder but worth
-            more points.
+            You're locked in a virtual lab. Each puzzle is an
+            <code>if / else</code> scenario. Answer correctly to move through
+            rooms. Every 5 puzzles, you hit a checkpoint.
           </p>
         </header>
 
         <!-- Start game box -->
         <div class="sub-card">
-          <h3 class="sub-card-title">Start Game</h3>
+          <h3 class="sub-card-title">Start Run</h3>
           <div class="form-row">
             <label for="playerName" class="sr-only">Player name</label>
             <input
@@ -51,15 +51,15 @@
             />
 
             <label for="levelSelect" class="sr-only">Level</label>
-            <select id="levelSelect" class="input" style="max-width: 170px;">
-              <option value="1">Level 1 – Intro to CS (1 pt/Q)</option>
+            <select id="levelSelect" class="input" style="max-width: 210px;">
+              <option value="1">Level 1 – Intro CS (1 pt/Q)</option>
               <option value="2">Level 2 – AP CSP (2 pts/Q)</option>
               <option value="3">Level 3 – AP CSA (3 pts/Q)</option>
               <option value="4">Level 4 – Honors DSA (4 pts/Q)</option>
               <option value="5">Level 5 – College CS (5 pts/Q)</option>
             </select>
 
-            <button id="startGameBtn" class="btn">Start Game</button>
+            <button id="startGameBtn" class="btn">Start Escape</button>
           </div>
         </div>
 
@@ -67,13 +67,19 @@
         <div id="gameArea" class="sub-card" hidden>
           <div class="sub-card-header">
             <h3 class="sub-card-title" id="levelInfo">
-              Level 1 – Question 1 / 20
+              Level 1 – Room 1
             </h3>
+            <p class="sub-card-meta">
+              Question: <span id="questionCounter">1 / 20</span>
+            </p>
             <p class="sub-card-meta">
               Score: <span id="scoreDisplay">0</span>
             </p>
             <p class="sub-card-meta">
               Lives: <span id="livesDisplay">❤❤❤</span>
+            </p>
+            <p class="sub-card-meta">
+              Checkpoint: <span id="checkpointDisplay">None yet</span>
             </p>
           </div>
 
@@ -90,23 +96,27 @@
           </div>
 
           <button id="nextQuestionBtn" class="btn btn-small" disabled>
-            Next Question
+            Next Puzzle
           </button>
         </div>
 
-        <!-- Game over box -->
+        <!-- Game over / escape screen -->
         <div id="gameOver" class="sub-card sub-card-highlight" hidden>
-          <h3 class="sub-card-title">Game Over</h3>
+          <h3 class="sub-card-title" id="gameOverTitle">Game Over</h3>
+          <p id="gameOverMessage">You escaped the lab!</p>
           <p>Player: <span id="finalPlayerName">—</span></p>
           <p>Level: <span id="finalLevel">—</span></p>
           <p>Final Score: <span id="finalScore">0</span></p>
 
           <div class="button-row">
+            <button id="continueCheckpointBtn" class="btn" hidden>
+              Continue from Checkpoint
+            </button>
             <button id="saveScoreBtn" class="btn">
               Save Score to Leaderboard
             </button>
             <button id="playAgainBtn" class="btn btn-outline">
-              Play Again
+              Restart Level
             </button>
           </div>
         </div>
@@ -117,7 +127,7 @@
         <!-- Directions -->
         <section class="card">
           <header class="card-header">
-            <h2 class="card-title">How to Play</h2>
+            <h2 class="card-title">Escape Rules</h2>
           </header>
           <ol class="info-list">
             <li>Enter your name and pick a <strong>Level</strong>.</li>
@@ -128,8 +138,12 @@
                 <li><strong>Level 2:</strong> AP Computer Science Principles</li>
                 <li><strong>Level 3:</strong> AP Computer Science A</li>
                 <li><strong>Level 4:</strong> Honors Advanced Data Structures & Algorithms</li>
-                <li><strong>Level 5:</strong> College-level CS</li>
+                <li><strong>Level 5:</strong> College-level Computer Science</li>
               </ul>
+            </li>
+            <li>
+              Each level uses harder and more confusing conditional logic as you
+              go deeper into the escape room.
             </li>
             <li>
               Higher levels are worth more points per correct answer:
@@ -142,12 +156,21 @@
             <li>
               Read the <strong>scenario</strong> and the
               <strong>if / else code</strong>. Choose what the code will
-              actually do.
+              actually do (not what you personally would do).
             </li>
-            <li>You have <strong>3 lives</strong>. A wrong answer costs 1 life.</li>
             <li>
-              Each game uses up to <strong>20 random questions</strong> from that
-              level’s question bank, or until you lose all 3 lives.
+              You have <strong>3 lives</strong>. A wrong answer costs
+              <strong>1 life</strong>.
+            </li>
+            <li>
+              Every <strong>5 questions</strong>, you reach a
+              <strong>checkpoint</strong>. If you lose all lives later, you can
+              restart from your last checkpoint with full lives, but your score
+              and progress after that checkpoint are lost.
+            </li>
+            <li>
+              Each escape run uses up to <strong>20 questions</strong> for that
+              level (4 rooms of 5 puzzles).
             </li>
           </ol>
         </section>
@@ -155,7 +178,7 @@
         <!-- Leaderboard card -->
         <section class="card" id="leaderboardCard">
           <header class="card-header">
-            <h2 class="card-title">Leaderboard</h2>
+            <h2 class="card-title">Escape Leaderboard</h2>
             <p class="card-subtitle small">
               Scores are stored locally in this browser.
             </p>
@@ -174,7 +197,3 @@
   </main>
 </body>
 </html>
-
-
-
-
