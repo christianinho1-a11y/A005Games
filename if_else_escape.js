@@ -19,766 +19,919 @@ const LEADERBOARD_KEY = "if_else_escape_leaderboard";
 // Level 5 → nested & combined logic (college-level)
 
 const IF_ELSE_QUESTIONS = [
-  // --- 0–9: very simple if ---
+  // ---------------------------
+  // LEVEL 1 SLICE (Intro CS)
+  // Simple ifs in the "Pixel High CS Lab"
+  // ---------------------------
+
   {
     scenario:
-      "The program checks if a user has more than 100 coins. coins = 150. What happens?",
-    code: `if (coins > 100) {
-  unlockBonus();
+      "You’re staying after school in the Pixel High CS lab when the lights flicker and the monitors glow neon green. A message appears: 'WELCOME TO THE CODE DUNGEON.' The first door only opens if your keycard level is above 0. keycardLevel = 1.",
+    code: `if (keycardLevel > 0) {
+  openDoor();
 }`,
     choices: [
-      "unlockBonus() runs.",
-      "unlockBonus() does NOT run.",
-      "The program crashes.",
+      "The door unlocks and slides open.",
+      "The door stays locked.",
+      "The game crashes and restarts.",
     ],
     correctIndex: 0,
   },
   {
     scenario:
-      "You only send a discount if total >= 50. total = 49. What happens?",
-    code: `if (total >= 50) {
-  sendDiscount();
+      "You find a holographic vending machine that dispenses hint tokens—but only if you have at least 10 coins. coins = 7.",
+    code: `if (coins >= 10) {
+  dispenseHintToken();
 }`,
     choices: [
-      "sendDiscount() runs.",
-      "sendDiscount() does NOT run.",
-      "sendDiscount() runs twice.",
-    ],
-    correctIndex: 1,
-  },
-  {
-    scenario:
-      "A game awards an extra life if score == 100. score = 100. What happens?",
-    code: `if (score == 100) {
-  lives = lives + 1;
-}`,
-    choices: [
-      "The player gains 1 life.",
-      "The player loses 1 life.",
+      "A hint token pops out.",
       "Nothing happens.",
+      "Your coins become 10.",
+    ],
+    correctIndex: 1,
+  },
+  {
+    scenario:
+      "A glowing floor tile says: 'STEP ONLY IF ENERGY == 100.' Your energy is exactly 100.",
+    code: `if (energy == 100) {
+  safeToStep = true;
+}`,
+    choices: [
+      "safeToStep becomes true and you walk across safely.",
+      "safeToStep becomes false and you fall through.",
+      "Nothing changes; the tile ignores you.",
     ],
     correctIndex: 0,
   },
   {
     scenario:
-      "The code checks if temperature < 0. temperature = 12. What happens?",
-    code: `if (temperature < 0) {
-  show("Freezing");
+      "You approach a fan tunnel. A sign reads: 'If fanSpeed > 5, duck or be blasted back.' fanSpeed = 3.",
+    code: `if (fanSpeed > 5) {
+  show("Duck!");
 }`,
     choices: [
-      'It shows "Freezing".',
-      "It shows nothing.",
-      "It shows an error.",
+      'The game shows "Duck!" and you crouch.',
+      "Nothing appears; it’s safe.",
+      "The fan explodes immediately.",
     ],
     correctIndex: 1,
   },
   {
-    scenario: "You give a warning if speed > 60. speed = 60.",
-    code: `if (speed > 60) {
-  show("Slow down!");
+    scenario:
+      "A security drone hovers nearby. It only charges at you if alertLevel is greater than 8. alertLevel = 8.",
+    code: `if (alertLevel > 8) {
+  droneCharge();
 }`,
     choices: [
-      'It shows "Slow down!"',
+      "The drone charges at you.",
+      "The drone stays where it is.",
+      "The drone powers off.",
+    ],
+    correctIndex: 1,
+  },
+  {
+    scenario:
+      "You find a teleport pad labeled: 'Teleport if crystalsCollected >= 3'. crystalsCollected = 4.",
+    code: `if (crystalsCollected >= 3) {
+  teleportToNextRoom();
+}`,
+    choices: [
+      "You teleport to the next room.",
+      "You stay where you are.",
+      "You lose all crystals.",
+    ],
+    correctIndex: 0,
+  },
+  {
+    scenario:
+      "There’s a hallway full of lockers. A note says: 'If lockersOpened > 10, alarms sound.' lockersOpened = 2.",
+    code: `if (lockersOpened > 10) {
+  triggerAlarm();
+}`,
+    choices: [
+      "The alarm blares loudly.",
+      "No alarm sounds.",
+      "All lockers close instantly.",
+    ],
+    correctIndex: 1,
+  },
+  {
+    scenario:
+      "You see a shimmering save point. The caption says: 'If saveCrystals >= 1, activate checkpoint.' saveCrystals = 1.",
+    code: `if (saveCrystals >= 1) {
+  activateCheckpoint();
+}`,
+    choices: [
+      "The checkpoint activates with a bright flash.",
       "Nothing happens.",
-      "The computer shuts down.",
-    ],
-    correctIndex: 1,
-  },
-  {
-    scenario:
-      "A lab charges a fee if pagesPrinted > 10. pagesPrinted = 3. What happens?",
-    code: `if (pagesPrinted > 10) {
-  chargeFee();
-}`,
-    choices: [
-      "chargeFee() runs.",
-      "chargeFee() does not run.",
-      "The printer restarts.",
-    ],
-    correctIndex: 1,
-  },
-  {
-    scenario:
-      "A program gives a bonus if correctAnswers >= 8. correctAnswers = 9.",
-    code: `if (correctAnswers >= 8) {
-  giveBonus();
-}`,
-    choices: [
-      "giveBonus() runs.",
-      "giveBonus() does not run.",
-      "giveBonus() runs only if correctAnswers == 10.",
+      "Your saveCrystals reset to 0, but the checkpoint does not activate.",
     ],
     correctIndex: 0,
   },
   {
     scenario:
-      "You want to remind the user to plug in their laptop if battery < 20. battery = 19.",
-    code: `if (battery < 20) {
-  remindPlugIn();
+      "A digital whiteboard says: 'If puzzlesSolved == 5, reveal secret door.' puzzlesSolved = 3.",
+    code: `if (puzzlesSolved == 5) {
+  revealSecretDoor();
 }`,
     choices: [
-      "remindPlugIn() runs.",
-      "remindPlugIn() does not run.",
-      "The laptop turns off.",
-    ],
-    correctIndex: 0,
-  },
-  {
-    scenario: "The code checks if time == 12 for lunch. time = 10.",
-    code: `if (time == 12) {
-  show("Lunch time!");
-}`,
-    choices: [
-      'Shows "Lunch time!"',
-      "Shows nothing.",
-      "Shows an error.",
+      "The secret door appears.",
+      "Nothing happens yet.",
+      "The whiteboard shuts off forever.",
     ],
     correctIndex: 1,
   },
   {
     scenario:
-      "The program checks if isRaining is true. isRaining = false. What happens?",
-    code: `if (isRaining == true) {
-  grabUmbrella();
+      "You find a hologram projector that displays hints only if hintMeter < 2. hintMeter = 0.",
+    code: `if (hintMeter < 2) {
+  showHint();
 }`,
     choices: [
-      "grabUmbrella() runs.",
-      "grabUmbrella() does not run.",
-      "isRaining becomes true.",
+      "A new hint appears on the projector.",
+      "No hint appears.",
+      "The hintMeter is set to 2, but you get no hint.",
+    ],
+    correctIndex: 0,
+  },
+  {
+    scenario:
+      "A pressure plate reads: 'If weightOnPlate > 50, spikes extend.' weightOnPlate = 20.",
+    code: `if (weightOnPlate > 50) {
+  extendSpikes();
+}`,
+    choices: [
+      "Spikes extend and block your path.",
+      "The plate does nothing.",
+      "The plate launches you upward.",
     ],
     correctIndex: 1,
+  },
+  {
+    scenario:
+      "A digital sign says: 'If torchesLit >= 3, the hallway lights up.' torchesLit = 3.",
+    code: `if (torchesLit >= 3) {
+  lightHallway();
+}`,
+    choices: [
+      "The hallway lights up so you can see.",
+      "Nothing changes; it stays dark.",
+      "All torches go out.",
+    ],
+    correctIndex: 0,
   },
 
-  // --- 10–19: simple if with boundaries ---
-  {
-    scenario:
-      "You get a passing grade if grade >= 70. grade = 70. What happens?",
-    code: `if (grade >= 70) {
-  passed = true;
-}`,
-    choices: [
-      "passed becomes true.",
-      "passed becomes false.",
-      "Nothing changes.",
-    ],
-    correctIndex: 0,
-  },
-  {
-    scenario:
-      "An app gives a daily reward if loginsToday == 1. loginsToday = 2.",
-    code: `if (loginsToday == 1) {
-  giveReward();
-}`,
-    choices: [
-      "giveReward() runs once.",
-      "giveReward() does not run.",
-      "giveReward() runs twice.",
-    ],
-    correctIndex: 1,
-  },
-  {
-    scenario:
-      "You warn the user if downloadTime > 60 seconds. downloadTime = 75.",
-    code: `if (downloadTime > 60) {
-  show("This is taking a while...");
-}`,
-    choices: [
-      'Shows "This is taking a while..."',
-      "Shows nothing.",
-      "Shows a crash message.",
-    ],
-    correctIndex: 0,
-  },
-  {
-    scenario:
-      "If attempts >= 3 you lock the account. attempts = 3. What happens?",
-    code: `if (attempts >= 3) {
-  lockAccount();
-}`,
-    choices: [
-      "lockAccount() runs.",
-      "lockAccount() does not run.",
-      "attempts becomes 0.",
-    ],
-    correctIndex: 0,
-  },
-  {
-    scenario:
-      "You check if itemsInCart == 0 to show an empty-cart message. itemsInCart = 4.",
-    code: `if (itemsInCart == 0) {
-  show("Your cart is empty.");
-}`,
-    choices: [
-      'Shows "Your cart is empty."',
-      "Shows nothing.",
-      "Removes items from cart.",
-    ],
-    correctIndex: 1,
-  },
-  {
-    scenario:
-      "A study timer logs a break if minutesStudied >= 25. minutesStudied = 24.",
-    code: `if (minutesStudied >= 25) {
-  logBreak();
-}`,
-    choices: [
-      "logBreak() runs.",
-      "logBreak() does not run.",
-      "minutesStudied becomes 25.",
-    ],
-    correctIndex: 1,
-  },
-  {
-    scenario:
-      "A robot moves forward if obstacleDistance > 5. obstacleDistance = 10.",
-    code: `if (obstacleDistance > 5) {
-  moveForward();
-}`,
-    choices: [
-      "moveForward() runs.",
-      "moveForward() does not run.",
-      "Robot turns off.",
-    ],
-    correctIndex: 0,
-  },
-  {
-    scenario:
-      "An app congratulates you if streakDays > 7. streakDays = 7.",
-    code: `if (streakDays > 7) {
-  show("Amazing streak!");
-}`,
-    choices: [
-      'Shows "Amazing streak!"',
-      "Shows nothing.",
-      "Resets streakDays.",
-    ],
-    correctIndex: 1,
-  },
-  {
-    scenario:
-      "If age < 13, the site loads the kids' version. age = 11.",
-    code: `if (age < 13) {
-  loadKidsVersion();
-}`,
-    choices: [
-      "loadKidsVersion() runs.",
-      "Nothing happens.",
-      "The site closes.",
-    ],
-    correctIndex: 0,
-  },
-  {
-    scenario:
-      "The app sets isTeen to true if age >= 13. age = 12.",
-    code: `if (age >= 13) {
-  isTeen = true;
-}`,
-    choices: [
-      "isTeen becomes true.",
-      "isTeen stays whatever it was.",
-      "age becomes 13.",
-    ],
-    correctIndex: 1,
-  },
+  // ---------------------------
+  // LEVEL 2 SLICE (AP CSP)
+  // if / else with story choices
+  // ---------------------------
 
-  // --- 20–39: if / else (AP CSP-ish) ---
   {
     scenario:
-      "You pass if score >= 70, otherwise you fail. score = 85.",
-    code: `if (score >= 70) {
-  result = "Pass";
+      "You reach a fork in the code dungeon. A panel says: 'If hasMap is true, show the safe path; else show a random path.' hasMap = true.",
+    code: `if (hasMap) {
+  path = "safe";
 } else {
-  result = "Fail";
+  path = "random";
 }`,
     choices: [
-      'result is "Pass".',
-      'result is "Fail".',
+      'path becomes "safe".',
+      'path becomes "random".',
+      "path stays whatever it was before.",
+    ],
+    correctIndex: 0,
+  },
+  {
+    scenario:
+      "You approach a riddle door. If your riddleScore >= 3, it opens; otherwise, it locks tighter. riddleScore = 1.",
+    code: `if (riddleScore >= 3) {
+  doorStatus = "open";
+} else {
+  doorStatus = "locked";
+}`,
+    choices: [
+      'doorStatus is "open".',
+      'doorStatus is "locked".',
+      "doorStatus is unchanged.",
+    ],
+    correctIndex: 1,
+  },
+  {
+    scenario:
+      "You find a glowing console labeled 'Snack Dispenser'. If isHungry is true, it gives you a snack; otherwise, it says 'Maybe later.' isHungry = false.",
+    code: `if (isHungry) {
+  message = "Here, have a snack!";
+} else {
+  message = "Maybe later.";
+}`,
+    choices: [
+      'message becomes "Here, have a snack!".',
+      'message becomes "Maybe later."',
+      "message stays empty.",
+    ],
+    correctIndex: 1,
+  },
+  {
+    scenario:
+      "A digital bridge appears over a lava pit. If bridgeStable is true, crossing is safe; else you fall. bridgeStable = false.",
+    code: `if (bridgeStable) {
+  status = "safe";
+} else {
+  status = "danger";
+}`,
+    choices: [
+      'status is "safe".',
+      'status is "danger".',
+      "status is unchanged.",
+    ],
+    correctIndex: 1,
+  },
+  {
+    scenario:
+      "A floating book of spells checks your focus. If focusLevel > 5, you cast a correct spell; else you miscast. focusLevel = 9.",
+    code: `if (focusLevel > 5) {
+  castStatus = "success";
+} else {
+  castStatus = "fail";
+}`,
+    choices: [
+      'castStatus is "success".',
+      'castStatus is "fail".',
+      "castStatus stays unknown.",
+    ],
+    correctIndex: 0,
+  },
+  {
+    scenario:
+      "You are given a digital companion cube. If companionOnline is true, it follows you; else it stays off. companionOnline = false.",
+    code: `if (companionOnline) {
+  cubeState = "following";
+} else {
+  cubeState = "idle";
+}`,
+    choices: [
+      'cubeState is "following".',
+      'cubeState is "idle".',
+      "cubeState stays whatever it was.",
+    ],
+    correctIndex: 1,
+  },
+  {
+    scenario:
+      "A hallway of doors is labeled 'Only open doors for VIPs.' If isVIP is true, the door opens; else it flashes red. isVIP = true.",
+    code: `if (isVIP) {
+  doorLight = "green";
+} else {
+  doorLight = "red";
+}`,
+    choices: [
+      'doorLight is "green".',
+      'doorLight is "red".',
+      "doorLight turns off.",
+    ],
+    correctIndex: 0,
+  },
+  {
+    scenario:
+      "A control panel decides if you can access the next puzzle. If puzzlesSolved >= 5, accessGranted is true; else false. puzzlesSolved = 5.",
+    code: `if (puzzlesSolved >= 5) {
+  accessGranted = true;
+} else {
+  accessGranted = false;
+}`,
+    choices: [
+      "accessGranted is true.",
+      "accessGranted is false.",
+      "accessGranted is unchanged.",
+    ],
+    correctIndex: 0,
+  },
+  {
+    scenario:
+      "You find a terminal that checks if you’ve found the golden key. If hasGoldenKey is false, it says 'Keep searching'; else it says 'Door unlocked.' hasGoldenKey = false.",
+    code: `if (!hasGoldenKey) {
+  message = "Keep searching";
+} else {
+  message = "Door unlocked";
+}`,
+    choices: [
+      'message is "Keep searching".',
+      'message is "Door unlocked".',
+      "message is empty.",
+    ],
+    correctIndex: 0,
+  },
+  {
+    scenario:
+      "A trap chest checks if chestLocked is false. If it’s not locked, you safely open it; otherwise, it shoots confetti (and scares you). chestLocked = true.",
+    code: `if (!chestLocked) {
+  chestStatus = "opened safely";
+} else {
+  chestStatus = "confetti trap";
+}`,
+    choices: [
+      'chestStatus is "opened safely".',
+      'chestStatus is "confetti trap".',
+      "chestStatus does not change.",
+    ],
+    correctIndex: 1,
+  },
+  {
+    scenario:
+      "A scoreboard shows your performance. If mistakes == 0, rank is 'Flawless'; else 'Human'. mistakes = 2.",
+    code: `if (mistakes == 0) {
+  rank = "Flawless";
+} else {
+  rank = "Human";
+}`,
+    choices: [
+      'rank is "Flawless".',
+      'rank is "Human".',
+      "rank is blank.",
+    ],
+    correctIndex: 1,
+  },
+  {
+    scenario:
+      "A puzzle door checks your time. If timeRemaining > 30, it says 'Relax'; else 'Hurry!'. timeRemaining = 15.",
+    code: `if (timeRemaining > 30) {
+  doorMessage = "Relax";
+} else {
+  doorMessage = "Hurry!";
+}`,
+    choices: [
+      'doorMessage is "Relax".',
+      'doorMessage is "Hurry!".',
+      "doorMessage is unchanged.",
+    ],
+    correctIndex: 1,
+  },
+
+  // ---------------------------
+  // LEVEL 3 SLICE (AP CSA)
+  // else-if chains narratively
+  // ---------------------------
+
+  {
+    scenario:
+      "You enter the Elemental Room. The temperature determines which elemental spirit appears. temp = 95.",
+    code: `if (temp >= 90) {
+  spirit = "Fire";
+} else if (temp >= 60) {
+  spirit = "Air";
+} else if (temp >= 30) {
+  spirit = "Water";
+} else {
+  spirit = "Earth";
+}`,
+    choices: [
+      'spirit is "Fire".',
+      'spirit is "Air".',
+      'spirit is "Water".',
+      'spirit is "Earth".',
+    ],
+    correctIndex: 0,
+  },
+  {
+    scenario:
+      "You consult the dungeon’s grade tablet. It assigns a badge based on your puzzleScore. puzzleScore = 82.",
+    code: `if (puzzleScore >= 90) {
+  badge = "Legend";
+} else if (puzzleScore >= 80) {
+  badge = "Expert";
+} else if (puzzleScore >= 70) {
+  badge = "Adept";
+} else {
+  badge = "Novice";
+}`,
+    choices: [
+      'badge is "Legend".',
+      'badge is "Expert".',
+      'badge is "Adept".',
+      'badge is "Novice".',
+    ],
+    correctIndex: 1,
+  },
+  {
+    scenario:
+      "You open a chest that classifies your progress. progressPercent = 74.",
+    code: `if (progressPercent >= 90) {
+  label = "Almost Out";
+} else if (progressPercent >= 70) {
+  label = "Deep In";
+} else if (progressPercent >= 40) {
+  label = "Halfway";
+} else {
+  label = "Just Started";
+}`,
+    choices: [
+      'label is "Almost Out".',
+      'label is "Deep In".',
+      'label is "Halfway".',
+      'label is "Just Started".',
+    ],
+    correctIndex: 1,
+  },
+  {
+    scenario:
+      "The dungeon classifies your health state. health = 35.",
+    code: `if (health > 75) {
+  state = "Strong";
+} else if (health > 50) {
+  state = "Okay";
+} else if (health > 25) {
+  state = "Weak";
+} else {
+  state = "Critical";
+}`,
+    choices: [
+      'state is "Strong".',
+      'state is "Okay".',
+      'state is "Weak".',
+      'state is "Critical".',
+    ],
+    correctIndex: 2,
+  },
+  {
+    scenario:
+      "You adjust the difficulty dial on a console. Setting 0 shows 'Tutorial', 1–2 shows 'Normal', 3–4 shows 'Hard', else 'Insane'. difficultySetting = 3.",
+    code: `if (difficultySetting == 0) {
+  difficultyText = "Tutorial";
+} else if (difficultySetting <= 2) {
+  difficultyText = "Normal";
+} else if (difficultySetting <= 4) {
+  difficultyText = "Hard";
+} else {
+  difficultyText = "Insane";
+}`,
+    choices: [
+      'difficultyText is "Tutorial".',
+      'difficultyText is "Normal".',
+      'difficultyText is "Hard".',
+      'difficultyText is "Insane".',
+    ],
+    correctIndex: 2,
+  },
+  {
+    scenario:
+      "A puzzle classifies how many secret rooms you've found. secretsFound = 0.",
+    code: `if (secretsFound >= 10) {
+  classification = "Master Explorer";
+} else if (secretsFound >= 5) {
+  classification = "Explorer";
+} else if (secretsFound >= 1) {
+  classification = "Curious";
+} else {
+  classification = "Just Passing Through";
+}`,
+    choices: [
+      'classification is "Master Explorer".',
+      'classification is "Explorer".',
+      'classification is "Curious".',
+      'classification is "Just Passing Through".',
+    ],
+    correctIndex: 3,
+  },
+  {
+    scenario:
+      "A door chooses background music based on dangerLevel. dangerLevel = 6.",
+    code: `if (dangerLevel >= 8) {
+  music = "Intense Boss Theme";
+} else if (dangerLevel >= 5) {
+  music = "Tense Drums";
+} else if (dangerLevel >= 2) {
+  music = "Curious Ambience";
+} else {
+  music = "Chill Lo-fi";
+}`,
+    choices: [
+      'music is "Intense Boss Theme".',
+      'music is "Tense Drums".',
+      'music is "Curious Ambience".',
+      'music is "Chill Lo-fi".',
+    ],
+    correctIndex: 1,
+  },
+  {
+    scenario:
+      "The hint system decides how many hints to give. mistakesMade = 3.",
+    code: `if (mistakesMade == 0) {
+  hintMode = "None";
+} else if (mistakesMade == 1) {
+  hintMode = "Subtle";
+} else if (mistakesMade <= 3) {
+  hintMode = "Helpful";
+} else {
+  hintMode = "Aggressive";
+}`,
+    choices: [
+      'hintMode is "None".',
+      'hintMode is "Subtle".',
+      'hintMode is "Helpful".',
+      'hintMode is "Aggressive".',
+    ],
+    correctIndex: 2,
+  },
+  {
+    scenario:
+      "The dungeon rates your speed by timeRemaining. timeRemaining = 5.",
+    code: `if (timeRemaining > 60) {
+  speedRating = "Chill Explorer";
+} else if (timeRemaining > 30) {
+  speedRating = "Balanced Solver";
+} else if (timeRemaining > 10) {
+  speedRating = "Quick Thinker";
+} else {
+  speedRating = "Speed Runner";
+}`,
+    choices: [
+      'speedRating is "Chill Explorer".',
+      'speedRating is "Balanced Solver".',
+      'speedRating is "Quick Thinker".',
+      'speedRating is "Speed Runner".',
+    ],
+    correctIndex: 3,
+  },
+  {
+    scenario:
+      "A mysterious mirror labels your courageLevel. courageLevel = 15.",
+    code: `if (courageLevel >= 25) {
+  courageLabel = "Fearless";
+} else if (courageLevel >= 15) {
+  courageLabel = "Brave";
+} else if (courageLevel >= 5) {
+  courageLabel = "Trying";
+} else {
+  courageLabel = "Nervous";
+}`,
+    choices: [
+      'courageLabel is "Fearless".',
+      'courageLabel is "Brave".',
+      'courageLabel is "Trying".',
+      'courageLabel is "Nervous".',
+    ],
+    correctIndex: 1,
+  },
+
+  // ---------------------------
+  // LEVEL 4 SLICE (Honors DSA)
+  // &&, ||, ! in story traps
+  // ---------------------------
+
+  {
+    scenario:
+      "You reach the Laser Gate. It only deactivates if you have the passcode AND are wearing safety goggles. hasPasscode = true, wearingGoggles = false.",
+    code: `if (hasPasscode && wearingGoggles) {
+  lasersOn = false;
+} else {
+  lasersOn = true;
+}`,
+    choices: [
+      "lasersOn is false.",
+      "lasersOn is true.",
+      "lasersOn is unchanged.",
+    ],
+    correctIndex: 1,
+  },
+  {
+    scenario:
+      "You want to sneak past a sleepy guard. The path is safe if noiseLevel is 0 OR guardAsleep is true. noiseLevel = 4, guardAsleep = true.",
+    code: `if (noiseLevel == 0 || guardAsleep) {
+  pathSafe = true;
+} else {
+  pathSafe = false;
+}`,
+    choices: [
+      "pathSafe is true.",
+      "pathSafe is false.",
+      "pathSafe is unchanged.",
+    ],
+    correctIndex: 0,
+  },
+  {
+    scenario:
+      "The Code Vault opens only if you are a member AND your keycard is valid. isMember = true, keycardValid = false.",
+    code: `if (isMember && keycardValid) {
+  vaultStatus = "open";
+} else {
+  vaultStatus = "closed";
+}`,
+    choices: [
+      'vaultStatus is "open".',
+      'vaultStatus is "closed".',
+      "vaultStatus is unchanged.",
+    ],
+    correctIndex: 1,
+  },
+  {
+    scenario:
+      "A door will unlock if you solve the logic puzzle OR you have a master key. solvedPuzzle = false, hasMasterKey = false.",
+    code: `if (solvedPuzzle || hasMasterKey) {
+  doorUnlocked = true;
+} else {
+  doorUnlocked = false;
+}`,
+    choices: [
+      "doorUnlocked is true.",
+      "doorUnlocked is false.",
+      "doorUnlocked is unchanged.",
+    ],
+    correctIndex: 1,
+  },
+  {
+    scenario:
+      "The alarm system triggers if NOT isDisarmed. isDisarmed = false.",
+    code: `if (!isDisarmed) {
+  alarmTriggered = true;
+} else {
+  alarmTriggered = false;
+}`,
+    choices: [
+      "alarmTriggered is true.",
+      "alarmTriggered is false.",
+      "alarmTriggered stays whatever it was.",
+    ],
+    correctIndex: 0,
+  },
+  {
+    scenario:
+      "The alarm system triggers if NOT isDisarmed. isDisarmed = true.",
+    code: `if (!isDisarmed) {
+  alarmTriggered = true;
+} else {
+  alarmTriggered = false;
+}`,
+    choices: [
+      "alarmTriggered is true.",
+      "alarmTriggered is false.",
+      "alarmTriggered stays whatever it was.",
+    ],
+    correctIndex: 1,
+  },
+  {
+    scenario:
+      "A bridge appears only if hasCrystal AND hasRune. hasCrystal = true, hasRune = true.",
+    code: `if (hasCrystal && hasRune) {
+  bridgeVisible = true;
+} else {
+  bridgeVisible = false;
+}`,
+    choices: [
+      "bridgeVisible is true.",
+      "bridgeVisible is false.",
+      "bridgeVisible is unchanged.",
+    ],
+    correctIndex: 0,
+  },
+  {
+    scenario:
+      "The hint orb glows if your confusionLevel > 5 OR you have no hints left. confusionLevel = 2, hintsRemaining = 0.",
+    code: `if (confusionLevel > 5 || hintsRemaining == 0) {
+  orbGlowing = true;
+} else {
+  orbGlowing = false;
+}`,
+    choices: [
+      "orbGlowing is true.",
+      "orbGlowing is false.",
+      "orbGlowing is unchanged.",
+    ],
+    correctIndex: 0,
+  },
+  {
+    scenario:
+      "The trap floor opens if weightOnTile > 50 AND isTripped is true. weightOnTile = 80, isTripped = false.",
+    code: `if (weightOnTile > 50 && isTripped) {
+  floorOpen = true;
+} else {
+  floorOpen = false;
+}`,
+    choices: [
+      "floorOpen is true.",
+      "floorOpen is false.",
+      "floorOpen is unchanged.",
+    ],
+    correctIndex: 1,
+  },
+  {
+    scenario:
+      "A secret library door opens if you enter the code OR the librarian likes you. codeCorrect = false, librarianFriendly = true.",
+    code: `if (codeCorrect || librarianFriendly) {
+  libraryDoor = "open";
+} else {
+  libraryDoor = "closed";
+}`,
+    choices: [
+      'libraryDoor is "open".',
+      'libraryDoor is "closed".',
+      "libraryDoor is unchanged.",
+    ],
+    correctIndex: 0,
+  },
+  {
+    scenario:
+      "The elevator moves if NOT (overloaded OR powerOut). overloaded = false, powerOut = true.",
+    code: `if (!(overloaded || powerOut)) {
+  elevatorMoving = true;
+} else {
+  elevatorMoving = false;
+}`,
+    choices: [
+      "elevatorMoving is true.",
+      "elevatorMoving is false.",
+      "elevatorMoving is unchanged.",
+    ],
+    correctIndex: 1,
+  },
+  {
+    scenario:
+      "The elevator moves if NOT (overloaded OR powerOut). overloaded = false, powerOut = false.",
+    code: `if (!(overloaded || powerOut)) {
+  elevatorMoving = true;
+} else {
+  elevatorMoving = false;
+}`,
+    choices: [
+      "elevatorMoving is true.",
+      "elevatorMoving is false.",
+      "elevatorMoving is unchanged.",
+    ],
+    correctIndex: 0,
+  },
+
+  // ---------------------------
+  // LEVEL 5 SLICE (College-ish)
+  // Nested / combined story logic
+  // ---------------------------
+
+  {
+    scenario:
+      "You reach the Core Door. First it checks if you’re wearing the correct badge. Only then does it check if your clearanceLevel > 3. wearingBadge = true, clearanceLevel = 2.",
+    code: `if (wearingBadge) {
+  if (clearanceLevel > 3) {
+    coreDoor = "open";
+  }
+}`,
+    choices: [
+      'coreDoor becomes "open".',
+      'coreDoor stays whatever it was (probably closed).',
+      'coreDoor becomes "error".',
+    ],
+    correctIndex: 1,
+  },
+  {
+    scenario:
+      "In another hallway, the code first checks if wearingBadge is true, then checks clearanceLevel > 3. wearingBadge = true, clearanceLevel = 5.",
+    code: `if (wearingBadge) {
+  if (clearanceLevel > 3) {
+    coreDoor = "open";
+  }
+}`,
+    choices: [
+      'coreDoor becomes "open".',
+      'coreDoor stays whatever it was.',
+      'coreDoor becomes "denied".',
+    ],
+    correctIndex: 0,
+  },
+  {
+    scenario:
+      "A logic gate decides whether to show the 'Secret Ending'. It appears only if (allRoomsCleared AND coinsCollected >= 50). allRoomsCleared = true, coinsCollected = 40.",
+    code: `if (allRoomsCleared && coinsCollected >= 50) {
+  ending = "Secret Ending";
+} else {
+  ending = "Normal Ending";
+}`,
+    choices: [
+      'ending is "Secret Ending".',
+      'ending is "Normal Ending".',
+      "ending doesn't change.",
+    ],
+    correctIndex: 1,
+  },
+  {
+    scenario:
+      "A filter decides whether to show you the 'Pro Tip' tutorial. It shows only if NOT (alreadyPro || skipTutorial). alreadyPro = false, skipTutorial = false.",
+    code: `if (!(alreadyPro || skipTutorial)) {
+  showProTip = true;
+} else {
+  showProTip = false;
+}`,
+    choices: [
+      "showProTip is true.",
+      "showProTip is false.",
+      "showProTip is unchanged.",
+    ],
+    correctIndex: 0,
+  },
+  {
+    scenario:
+      "You stand before the final puzzle console. It grants 'Perfect Clear' only if mistakes == 0 AND timeRemaining > 0. mistakes = 1, timeRemaining = 120.",
+    code: `if (mistakes == 0 && timeRemaining > 0) {
+  result = "Perfect Clear";
+} else {
+  result = "Clear";
+}`,
+    choices: [
+      'result is "Perfect Clear".',
+      'result is "Clear".',
       "result is unchanged.",
     ],
-    correctIndex: 0,
-  },
-  {
-    scenario:
-      "You pass if score >= 70, otherwise you fail. score = 60.",
-    code: `if (score >= 70) {
-  result = "Pass";
-} else {
-  result = "Fail";
-}`,
-    choices: [
-      'result is "Pass".',
-      'result is "Fail".',
-      "Both messages are shown.",
-    ],
     correctIndex: 1,
   },
   {
     scenario:
-      "If isLoggedIn is true, show the dashboard; otherwise ask to log in. isLoggedIn = false.",
-    code: `if (isLoggedIn) {
-  showDashboard();
+      "A strange orb reacts only when (magicLevel > 5 OR debugMode is true) AND NOT cursed. magicLevel = 3, debugMode = true, cursed = false.",
+    code: `if ((magicLevel > 5 || debugMode) && !cursed) {
+  orbState = "Awake";
 } else {
-  showLogin();
+  orbState = "Dormant";
 }`,
     choices: [
-      "showDashboard() runs.",
-      "showLogin() runs.",
-      "Neither function runs.",
-    ],
-    correctIndex: 1,
-  },
-  {
-    scenario:
-      "If temp > 30 show 'Hot'; else show 'Not hot'. temp = 18.",
-    code: `if (temp > 30) {
-  show("Hot");
-} else {
-  show("Not hot");
-}`,
-    choices: [
-      'Shows "Hot".',
-      'Shows "Not hot".',
-      "Shows nothing.",
-    ],
-    correctIndex: 1,
-  },
-  {
-    scenario:
-      "If isStudent is true, you get a discount; otherwise pay full price. isStudent = true.",
-    code: `if (isStudent) {
-  price = price * 0.8;
-} else {
-  price = price;
-}`,
-    choices: [
-      "price becomes 80% of the original.",
-      "price doubles.",
-      "price stays the same.",
+      'orbState is "Awake".',
+      'orbState is "Dormant".',
+      "orbState is unchanged.",
     ],
     correctIndex: 0,
   },
   {
     scenario:
-      "If tickets > 0 you can enter; else you cannot. tickets = 0.",
-    code: `if (tickets > 0) {
-  canEnter = true;
+      "The orb reacts only when (magicLevel > 5 OR debugMode is true) AND NOT cursed. magicLevel = 3, debugMode = false, cursed = true.",
+    code: `if ((magicLevel > 5 || debugMode) && !cursed) {
+  orbState = "Awake";
 } else {
-  canEnter = false;
+  orbState = "Dormant";
 }`,
     choices: [
-      "canEnter is true.",
-      "canEnter is false.",
-      "canEnter is unchanged.",
+      'orbState is "Awake".',
+      'orbState is "Dormant".',
+      "orbState is unchanged.",
     ],
     correctIndex: 1,
   },
   {
     scenario:
-      "If batteryPercent >= 50, quality is 'High'; else 'Low'. batteryPercent = 20.",
-    code: `if (batteryPercent >= 50) {
-  videoQuality = "High";
+      "A gate’s logic says: if (hasBlueKey && hasRedKey) OR masterOverride is true, then open. hasBlueKey = true, hasRedKey = false, masterOverride = true.",
+    code: `if ((hasBlueKey && hasRedKey) || masterOverride) {
+  gate = "open";
 } else {
-  videoQuality = "Low";
+  gate = "closed";
 }`,
     choices: [
-      'videoQuality is "High".',
-      'videoQuality is "Low".',
-      "videoQuality is unchanged.",
-    ],
-    correctIndex: 1,
-  },
-  {
-    scenario:
-      "If stepsToday >= goal, show 'Goal reached'; otherwise 'Keep going'. stepsToday = 9000, goal = 10000.",
-    code: `if (stepsToday >= goal) {
-  show("Goal reached");
-} else {
-  show("Keep going");
-}`,
-    choices: [
-      'Shows "Goal reached".',
-      'Shows "Keep going".',
-      "Shows nothing.",
-    ],
-    correctIndex: 1,
-  },
-  {
-    scenario:
-      "If numMessages == 0 show 'Inbox zero'; else show the number. numMessages = 5.",
-    code: `if (numMessages == 0) {
-  show("Inbox zero");
-} else {
-  show(numMessages);
-}`,
-    choices: [
-      'Shows "Inbox zero".',
-      "Shows 5.",
-      "Shows nothing.",
-    ],
-    correctIndex: 1,
-  },
-  {
-    scenario:
-      "If booksOverdue > 0 you pay a fine; else you pay nothing. booksOverdue = 2.",
-    code: `if (booksOverdue > 0) {
-  payFine();
-} else {
-  payNothing();
-}`,
-    choices: [
-      "payFine() runs.",
-      "payNothing() runs.",
-      "Both run.",
+      'gate is "open".',
+      'gate is "closed".',
+      "gate is unchanged.",
     ],
     correctIndex: 0,
   },
   {
     scenario:
-      "If isAdmin is true, give 'Full' access; else 'Limited'. isAdmin = false.",
-    code: `if (isAdmin) {
-  accessLevel = "Full";
+      "The same gate logic runs, but this time hasBlueKey = true, hasRedKey = false, masterOverride = false.",
+    code: `if ((hasBlueKey && hasRedKey) || masterOverride) {
+  gate = "open";
 } else {
-  accessLevel = "Limited";
+  gate = "closed";
 }`,
     choices: [
-      'accessLevel is "Full".',
-      'accessLevel is "Limited".',
-      "accessLevel doesn't change.",
+      'gate is "open".',
+      'gate is "closed".',
+      "gate is unchanged.",
     ],
     correctIndex: 1,
   },
   {
     scenario:
-      "If isMuted is true, volume is 0; else volume stays. isMuted = true.",
-    code: `if (isMuted) {
-  volume = 0;
+      "For the final hallway, an AI checks if (goodDeeds >= 5 AND badJokes < 3). goodDeeds = 5, badJokes = 3.",
+    code: `if (goodDeeds >= 5 && badJokes < 3) {
+  hallwayMood = "Cheerful";
 } else {
-  volume = volume;
+  hallwayMood = "Slightly Judgy";
 }`,
     choices: [
-      "volume becomes 0.",
-      "volume doubles.",
-      "volume becomes -1.",
+      'hallwayMood is "Cheerful".',
+      'hallwayMood is "Slightly Judgy".',
+      "hallwayMood is unchanged.",
+    ],
+    correctIndex: 1,
+  },
+  {
+    scenario:
+      "The same AI logic: goodDeeds = 5, badJokes = 2.",
+    code: `if (goodDeeds >= 5 && badJokes < 3) {
+  hallwayMood = "Cheerful";
+} else {
+  hallwayMood = "Slightly Judgy";
+}`,
+    choices: [
+      'hallwayMood is "Cheerful".',
+      'hallwayMood is "Slightly Judgy".',
+      "hallwayMood is unchanged.",
     ],
     correctIndex: 0,
-  },
-  {
-    scenario:
-      "If hasMembership is false, you must pay a fee; else it's free. hasMembership = true.",
-    code: `if (!hasMembership) {
-  payFee();
-} else {
-  enterFree();
-}`,
-    choices: [
-      "payFee() runs.",
-      "enterFree() runs.",
-      "Nothing happens.",
-    ],
-    correctIndex: 1,
-  },
-  {
-    scenario:
-      "If seatsLeft == 0 you show 'Sold out'; else you show 'Available'. seatsLeft = 0.",
-    code: `if (seatsLeft == 0) {
-  show("Sold out");
-} else {
-  show("Available");
-}`,
-    choices: [
-      'Shows "Sold out".',
-      'Shows "Available".',
-      "Shows nothing.",
-    ],
-    correctIndex: 0,
-  },
-  {
-    scenario:
-      "If homeworkDone is true, canPlayGames is true; else false. homeworkDone = false.",
-    code: `if (homeworkDone) {
-  canPlayGames = true;
-} else {
-  canPlayGames = false;
-}`,
-    choices: [
-      "canPlayGames is true.",
-      "canPlayGames is false.",
-      "canPlayGames is unchanged.",
-    ],
-    correctIndex: 1,
-  },
-  {
-    scenario:
-      "If waterLevel < 20, the plant needs water; else it is fine. waterLevel = 25.",
-    code: `if (waterLevel < 20) {
-  needsWater = true;
-} else {
-  needsWater = false;
-}`,
-    choices: [
-      "needsWater is true.",
-      "needsWater is false.",
-      "needsWater is unchanged.",
-    ],
-    correctIndex: 1,
-  },
-  {
-    scenario:
-      "If minutesOnline > 120 you show a break message; else you show nothing. minutesOnline = 121.",
-    code: `if (minutesOnline > 120) {
-  show("Take a break!");
-} else {
-  // do nothing
-}`,
-    choices: [
-      'Shows "Take a break!"',
-      "Shows nothing.",
-      "Shows an error.",
-    ],
-    correctIndex: 0,
-  },
-  {
-    scenario:
-      "If queueLength == 0 serverStatus is 'Idle'; else 'Busy'. queueLength = 4.",
-    code: `if (queueLength == 0) {
-  serverStatus = "Idle";
-} else {
-  serverStatus = "Busy";
-}`,
-    choices: [
-      'serverStatus is "Idle".',
-      'serverStatus is "Busy".',
-      "serverStatus is unchanged.",
-    ],
-    correctIndex: 1,
-  },
-  {
-    scenario:
-      "If questionsAnswered >= 10 show 'Nice work'; else 'Keep going'. questionsAnswered = 3.",
-    code: `if (questionsAnswered >= 10) {
-  show("Nice work");
-} else {
-  show("Keep going");
-}`,
-    choices: [
-      'Shows "Nice work".',
-      'Shows "Keep going".',
-      "Shows nothing.",
-    ],
-    correctIndex: 1,
-  },
-  {
-    scenario:
-      "If age >= 18 you can vote; else you cannot. age = 17.",
-    code: `if (age >= 18) {
-  canVote = true;
-} else {
-  canVote = false;
-}`,
-    choices: [
-      "canVote is true.",
-      "canVote is false.",
-      "canVote is unchanged.",
-    ],
-    correctIndex: 1,
-  },
-
-  // --- 40–59: else-if chains (AP CSA-ish) ---
-  {
-    scenario:
-      "The program assigns a grade based on score. score = 95.",
-    code: `if (score >= 90) {
-  grade = "A";
-} else if (score >= 80) {
-  grade = "B";
-} else if (score >= 70) {
-  grade = "C";
-} else {
-  grade = "F";
-}`,
-    choices: [
-      'grade is "A".',
-      'grade is "B".',
-      'grade is "C".',
-      'grade is "F".',
-    ],
-    correctIndex: 0,
-  },
-  {
-    scenario:
-      "The program assigns a grade based on score. score = 84.",
-    code: `if (score >= 90) {
-  grade = "A";
-} else if (score >= 80) {
-  grade = "B";
-} else if (score >= 70) {
-  grade = "C";
-} else {
-  grade = "F";
-}`,
-    choices: [
-      'grade is "A".',
-      'grade is "B".',
-      'grade is "C".',
-      'grade is "F".',
-    ],
-    correctIndex: 1,
-  },
-  {
-    scenario:
-      "The program assigns a grade based on score. score = 75.",
-    code: `if (score >= 90) {
-  grade = "A";
-} else if (score >= 80) {
-  grade = "B";
-} else if (score >= 70) {
-  grade = "C";
-} else {
-  grade = "F";
-}`,
-    choices: [
-      'grade is "A".',
-      'grade is "B".',
-      'grade is "C".',
-      'grade is "F".',
-    ],
-    correctIndex: 2,
-  },
-  {
-    scenario:
-      "The program assigns a grade based on score. score = 62.",
-    code: `if (score >= 90) {
-  grade = "A";
-} else if (score >= 80) {
-  grade = "B";
-} else if (score >= 70) {
- grade = "C";
-} else {
-  grade = "F";
-}`,
-    choices: [
-      'grade is "A".',
-      'grade is "B".',
-      'grade is "C".',
-      'grade is "F".',
-    ],
-    correctIndex: 3,
-  },
-  {
-    scenario: "Classify temperature. temp = 12.",
-    code: `if (temp < 0) {
-  label = "Freezing";
-} else if (temp < 10) {
-  label = "Cold";
-} else if (temp < 20) {
-  label = "Cool";
-} else {
-  label = "Warm";
-}`,
-    choices: [
-      'label is "Freezing".',
-      'label is "Cold".',
-      'label is "Cool".',
-      'label is "Warm".',
-    ],
-    correctIndex: 2,
-  },
-  {
-    scenario: "Classify temperature. temp = -3.",
-    code: `if (temp < 0) {
-  label = "Freezing";
-} else if (temp < 10) {
-  label = "Cold";
-} else if (temp < 20) {
-  label = "Cool";
-} else {
-  label = "Warm";
-}`,
-    choices: [
-      'label is "Freezing".',
-      'label is "Cold".',
-      'label is "Cool".',
-      'label is "Warm".',
-    ],
-    correctIndex: 0,
-  },
-  {
-    scenario: "Classify temperature. temp = 5.",
-    code: `if (temp < 0) {
-  label = "Freezing";
-} else if (temp < 10) {
-  label = "Cold";
-} else if (temp < 20) {
-  label = "Cool";
-} else {
-  label = "Warm";
-}`,
-    choices: [
-      'label is "Freezing".',
-      'label is "Cold".',
-      'label is "Cool".',
-      'label is "Warm".',
-    ],
-    correctIndex: 1,
-  },
-  {
-    scenario: "Classify temperature. temp = 25.",
-    code: `if (temp < 0) {
-  label = "Freezing";
-} else if (temp < 10) {
-  label = "Cold";
-} else if (temp < 20) {
-  label = "Cool";
-} else {
-  label = "Warm";
-}`,
-    choices: [
-      'label is "Freezing".',
-      'label is "Cold".',
-      'label is "Cool".',
-      'label is "Warm".',
-    ],
-    correctIndex: 3,
-  },
-  {
-    scenario:
-      "Classify speed into 'Slow', 'Normal', or 'Fast'. speed = 40.",
-    code: `if (speed < 20) {
-  band = "Slow";
-} else if (speed < 60) {
-  band = "Normal";
-} else {
-  band = "Fast";
-}`,
-    choices: [
-      'band is "Slow".',
-      'band is "Normal".',
-      'band is "Fast".',
-    ],
-    correctIndex: 1,
-  },
-  {
-    scenario:
-      "Classify speed into 'Slow', 'Normal', or 'Fast'. speed = 10.",
-    code: `if (speed < 20) {
-  band = "Slow";
-} else if (speed < 60) {
-  band = "Normal";
-} else {
-  band = "Fast";
-}`,
-    choices: [
-      'band is "Slow".',
-      'band is "Normal".',
-      'band is "Fast".',
-    ],
-    correctIndex: 0,
-  },
-
-  // (You can continue the bank similarly; for brevity I’ll stop expanding here.
-  // The logic below DOES NOT depend on having exactly 100 questions; it just
-  // splits whatever length you have into 5 difficulty bands and 4 "rooms".)
+  }
 ];
+
+  
 
 // ----- State -----
 
