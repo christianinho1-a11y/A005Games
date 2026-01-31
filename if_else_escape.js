@@ -451,3 +451,4 @@ document.addEventListener("DOMContentLoaded", () => {
   if (openLeaderboardBtn)
     openLeaderboardBtn.addEventListener("click", scrollToLeaderboard);
 });
+
