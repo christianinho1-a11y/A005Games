@@ -1,3 +1,5 @@
+
+
 // if_else_escape.js
 
 // ----- Game configuration -----
@@ -14,9 +16,6 @@ const LEADERBOARD_KEY = "if_else_escape_leaderboard";
 // Level 3 → AP CSA-style else-if chains
 // Level 4 → Honors DSA-style &&, ||, !
 // Level 5 → College-ish combined / nested logic
-//
-// The generator will slice this array into 5 bands and then further split
-// each band into harder "rooms" within that level.
 
 const IF_ELSE_QUESTIONS = [
   // ---------------------------
@@ -933,8 +932,8 @@ const IF_ELSE_QUESTIONS = [
 
 // ----- State -----
 
-let currentQuestionIndex = 0;        // index within questionOrder
-let questionOrder = [];              // indices into IF_ELSE_QUESTIONS for this run
+let currentQuestionIndex = 0;
+let questionOrder = [];
 let currentScore = 0;
 let currentPlayerName = "";
 let hasAnsweredCurrent = false;
@@ -945,7 +944,7 @@ let selectedLevel = 1;
 let pointsPerQuestion = 1;
 
 // checkpoint state
-let checkpointIndex = 0;   // index in questionOrder where we restart
+let checkpointIndex = 0;
 let checkpointScore = 0;
 
 // ----- DOM helper -----
@@ -1043,7 +1042,7 @@ function updateCheckpointDisplay() {
 
 function updateQuestionAndRoomDisplay() {
   const totalQuestions = questionOrder.length;
-  const questionNumber = currentQuestionIndex + 1; // 1-based
+  const questionNumber = currentQuestionIndex + 1;
   const roomNumber = Math.floor(currentQuestionIndex / 5) + 1;
   const totalRooms = Math.ceil(totalQuestions / 5);
 
@@ -1051,7 +1050,7 @@ function updateQuestionAndRoomDisplay() {
   $("levelInfo").textContent = `Level ${selectedLevel} – Room ${roomNumber} of ${totalRooms}`;
 }
 
-// Extract patterns like "coins = 150" or "hasMap = true" from scenario text
+// Extract things like "coins = 150" or "hasMap = true"
 function extractAssignmentsFromScenario(scenarioText) {
   const assignments = [];
   const regex = /([a-zA-Z_][a-zA-Z0-9_]*)\s*=\s*([^\s,.]+)/g;
@@ -1073,13 +1072,6 @@ function shuffleArray(arr) {
   return arr;
 }
 
-/**
- * Difficulty mapping:
- * We split the full bank into 5 difficulty slices for levels,
- * then split each slice into up to 4 "rooms" (groups of indices).
- * Inside each group, we shuffle, but later rooms use higher indices,
- * so they tend to be more confusing.
- */
 function generateQuestionOrderForLevel() {
   const total = IF_ELSE_QUESTIONS.length;
   if (total === 0) return [];
@@ -1108,7 +1100,7 @@ function generateQuestionOrderForLevel() {
         : Math.min(totalLevelQuestions, gStart + baseGroupSize);
 
     const groupSlice = levelIndices.slice(gStart, gEnd);
-    shuffleArray(groupSlice); // random inside each room, but rooms get harder
+    shuffleArray(groupSlice);
     ordered.push(...groupSlice);
   }
 
@@ -1177,7 +1169,6 @@ function loadQuestion() {
 
   $("scenarioText").textContent = q.scenario;
 
-  // Show current values above the code, extracted from the scenario
   const assignments = extractAssignmentsFromScenario(q.scenario);
   let codeToShow = q.code;
   if (assignments.length > 0) {
@@ -1244,7 +1235,7 @@ function onChoiceClick(event) {
 
   const questionNumber = currentQuestionIndex + 1;
   if (livesLeft > 0 && questionNumber % 5 === 0) {
-    checkpointIndex = currentQuestionIndex + 1; // start of next room
+    checkpointIndex = currentQuestionIndex + 1;
     checkpointScore = currentScore;
     updateCheckpointDisplay();
   }
@@ -1336,12 +1327,6 @@ function saveCurrentScore() {
   alert("Score saved to leaderboard!");
 }
 
-function clearLeaderboard() {
-  if (!confirm("Clear all leaderboard scores for this game?")) return;
-  saveLeaderboard([]);
-  renderLeaderboard([]);
-}
-
 function scrollToLeaderboard() {
   const card = $("leaderboardCard");
   if (!card) return;
@@ -1357,7 +1342,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const nextBtn = $("nextQuestionBtn");
   const saveBtn = $("saveScoreBtn");
   const playAgainBtn = $("playAgainBtn");
-  const clearBtn = $("clearLeaderboardBtn");
   const openLeaderboardBtn = $("openLeaderboardBtn");
   const continueCheckpointBtn = $("continueCheckpointBtn");
 
@@ -1365,10 +1349,8 @@ document.addEventListener("DOMContentLoaded", () => {
   if (nextBtn) nextBtn.addEventListener("click", goToNextQuestion);
   if (saveBtn) saveBtn.addEventListener("click", saveCurrentScore);
   if (playAgainBtn) playAgainBtn.addEventListener("click", restartLevel);
-  if (clearBtn) clearBtn.addEventListener("click", clearLeaderboard);
   if (openLeaderboardBtn)
     openLeaderboardBtn.addEventListener("click", scrollToLeaderboard);
   if (continueCheckpointBtn)
     continueCheckpointBtn.addEventListener("click", continueFromCheckpoint);
 });
-
