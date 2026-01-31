@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Panel – CS & IT Games</title>
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="admin.js"></script>
+</head>
+<body class="cs-body">
+  <a href="index.html" class="back-link">← Back to Home</a>
+
+  <main class="page-wrap">
+    <header class="page-header">
+      <div>
+        <h1 class="page-title">// Admin Panel</h1>
+        <p class="page-subtitle">
+          Manage games &amp; leaderboards
+          <span class="tag">Teacher Only</span>
+        </p>
+      </div>
+    </header>
+
+    <!-- LOGIN CARD -->
+    <section class="layout-grid" id="loginSection">
+      <section class="card card-main" style="max-width: 480px; margin-inline: auto;">
+        <header class="card-header">
+          <h2 class="card-title">Admin Login</h2>
+          <p class="card-subtitle">
+            Enter the admin code to manage games and leaderboards.
+          </p>
+        </header>
+
+        <div class="sub-card">
+          <label for="adminCodeInput" class="sub-card-title" style="margin-bottom: 0.5rem;">
+            Admin Code
+          </label>
+          <input
+            type="password"
+            id="adminCodeInput"
+            class="input"
+            placeholder="Enter admin code"
+          />
+          <div class="button-row" style="margin-top: 1rem;">
+            <button id="adminLoginBtn" class="btn">Login</button>
+          </div>
+          <p id="loginError" class="sub-card-meta" style="color:#f97373; margin-top:0.5rem; display:none;">
+            Incorrect code. Try again.
+          </p>
+          <p class="sub-card-meta small" style="margin-top:0.75rem;">
+            Hint: classroom-only admin code. (You set this as <strong>A005</strong>.)
+          </p>
+        </div>
+      </section>
+    </section>
+
+    <!-- ADMIN DASHBOARD -->
+    <section class="layout-grid" id="adminSection" hidden>
+      <!-- LEFT COLUMN: Game registry -->
+      <section class="card card-main">
+        <header class="card-header">
+          <h2 class="card-title">Games Registry</h2>
+          <p class="card-subtitle">
+            Add, view, and remove games. Each game gets its own leaderboard key.
+          </p>
+        </header>
+
+        <!-- Add game form -->
+        <div class="sub-card">
+          <h3 class="sub-card-title">Add New Game</h3>
+          <div class="form-row stacked">
+            <label for="gameNameInput">Display Name</label>
+            <input
+              id="gameNameInput"
+              type="text"
+              class="input"
+              placeholder="e.g. If / Else Escape Room"
+            />
+
+            <label for="gameFileInput">HTML File Name</label>
+            <input
+              id="gameFileInput"
+              type="text"
+              class="input"
+              placeholder="e.g. if_else_escape.html"
+            />
+
+            <label for="gameCategorySelect">Category</label>
+            <select id="gameCategorySelect" class="input">
+              <option value="cs">Computer Science</option>
+              <option value="it">Information Technology</option>
+              <option value="cyber">Cyber Security</option>
+            </select>
+
+            <p class="sub-card-meta small">
+              The admin panel will auto-generate a
+              <strong>leaderboard key</strong> from the file name.<br />
+              Example: <code>if_else_escape.html → if_else_escape_leaderboard</code><br />
+              Use that key in the game’s JS when you set up its leaderboard.
+            </p>
+
+            <button id="addGameBtn" class="btn">Add Game</button>
+          </div>
+        </div>
+
+        <!-- Game list -->
+        <div class="sub-card">
+          <h3 class="sub-card-title">Registered Games</h3>
+          <ul id="gameList" class="info-list">
+            <!-- Filled by JS -->
+          </ul>
+
+          <button id="clearAllLbBtn" class="btn btn-small btn-danger">
+            Clear All Leaderboards in Registry
+          </button>
+        </div>
+      </section>
+
+      <!-- RIGHT COLUMN: Leaderboard tools / notes -->
+      <aside class="sidebar">
+        <section class="card">
+          <header class="card-header">
+            <h2 class="card-title">How This Works</h2>
+          </header>
+          <ul class="info-list">
+            <li>
+              <strong>Login:</strong> Admin code is <code>A005</code>. This is
+              purely front-end; students can’t accidentally delete things
+              without knowing the code.
+            </li>
+            <li>
+              <strong>Game Registry:</strong> Each game you add is stored in
+              <code>localStorage</code> on this browser under a registry key.
+            </li>
+            <li>
+              <strong>Leaderboards:</strong> Each game gets a
+              <code>leaderboardKey</code>. The admin panel uses that to clear
+              scores. Your game JS should use the same key.
+            </li>
+            <li>
+              <strong>If / Else Escape example:</strong><br />
+              File: <code>if_else_escape.html</code><br />
+              Game ID: <code>if_else_escape</code><br />
+              Leaderboard key: <code>if_else_escape_leaderboard</code>
+            </li>
+            <li>
+              <strong>Note:</strong> This page cannot create actual files on
+              your WAMP folder. It manages metadata and leaderboards stored in
+              the browser.
+            </li>
+          </ul>
+        </section>
+      </aside>
+    </section>
+  </main>
+</body>
+</html>
