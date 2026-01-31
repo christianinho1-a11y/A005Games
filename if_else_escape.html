@@ -32,9 +32,10 @@
         <header class="card-header">
           <h2 class="card-title">Play the Game</h2>
           <p class="card-subtitle">
-            You have <strong>3 lives</strong>. Answer questions about
-            <code>if</code>, <code>else if</code>, and <code>else</code>.
-            Every 10 questions, you move up a level.
+            You have <strong>3 lives</strong>. Choose a level and answer
+            questions about <code>if</code>, <code>else if</code>, and
+            <code>else</code>. Higher levels give you more points per correct
+            answer (Level 1 = 1 pt, Level 5 = 5 pts).
           </p>
         </header>
 
@@ -49,6 +50,16 @@
               class="input"
               placeholder="Your name"
             />
+
+            <label for="levelSelect" class="sr-only">Level</label>
+            <select id="levelSelect" class="input" style="max-width: 140px;">
+              <option value="1">Level 1 (1 pt/Q)</option>
+              <option value="2">Level 2 (2 pts/Q)</option>
+              <option value="3">Level 3 (3 pts/Q)</option>
+              <option value="4">Level 4 (4 pts/Q)</option>
+              <option value="5">Level 5 (5 pts/Q)</option>
+            </select>
+
             <button id="startGameBtn" class="btn">Start Game</button>
           </div>
         </div>
@@ -109,23 +120,24 @@
             <h2 class="card-title">How to Play</h2>
           </header>
           <ol class="info-list">
-            <li>Enter your name and press <strong>Start Game</strong>.</li>
+            <li>Enter your name and pick a <strong>Level</strong>.</li>
+            <li>
+              Higher levels are worth more points:
+              <strong>Level 1 = 1 pt</strong>,
+              <strong>Level 2 = 2 pts</strong>,
+              <strong>Level 3 = 3 pts</strong>,
+              <strong>Level 4 = 4 pts</strong>,
+              <strong>Level 5 = 5 pts</strong> per correct answer.
+            </li>
             <li>
               Read the <strong>scenario</strong> and the
-              <strong>if / else code</strong>.
+              <strong>if / else code</strong>. Choose what the code will
+              actually do.
             </li>
+            <li>A wrong answer costs you <strong>1 life</strong>.</li>
             <li>
-              Choose the option that matches what the code will actually do,
-              not what you would do in real life.
-            </li>
-            <li>
-              You have <strong>3 lives</strong>. A wrong answer costs
-              <strong>1 life</strong>.
-            </li>
-            <li>
-              Every <strong>10 questions</strong>, your level increases.
-              You’ll face up to <strong>50 questions</strong> selected at random
-              from a bank of 100.
+              You'll see up to <strong>50 random questions</strong> per game or
+              until you lose all 3 lives.
             </li>
           </ol>
         </section>
@@ -152,5 +164,6 @@
   </main>
 </body>
 </html>
+
 
 
