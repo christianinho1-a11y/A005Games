@@ -1,7 +1,5 @@
-
 // admin.js
 
-const ADMIN_CODE = "A005";
 const GAME_REGISTRY_KEY = "cs_games_registry";
 
 let games = [];
@@ -42,7 +40,7 @@ function makeGameIdFromFile(fileName) {
 
 function renderGameList() {
   const list = $("gameList");
-  if (!list) return;
+  if (!list) return; // We're probably on the login view only
 
   list.innerHTML = "";
 
@@ -143,6 +141,8 @@ function addGameFromForm() {
   const fileInput = $("gameFileInput");
   const categorySelect = $("gameCategorySelect");
 
+  if (!nameInput || !fileInput || !categorySelect) return; // on login view
+
   const name = (nameInput.value || "").trim();
   const fileName = (fileInput.value || "").trim();
   const category = (categorySelect.value || "cs").trim();
@@ -204,63 +204,18 @@ function deleteGame(gameId) {
   renderGameList();
 }
 
-// ---- Login ----
-
-function handleLogin() {
-  const codeInput = $("adminCodeInput");
-  const errorEl = $("loginError");
-  const entered = (codeInput.value || "").trim();
-
-  if (entered === ADMIN_CODE) {
-    sessionStorage.setItem("cs_games_admin_logged_in", "true");
-    showAdmin();
-  } else {
-    errorEl.style.display = "block";
-    errorEl.textContent = "Incorrect code. Try again.";
-  }
-}
-
-function checkExistingLogin() {
-  const isLogged =
-    sessionStorage.getItem("cs_games_admin_logged_in") === "true";
-  if (isLogged) {
-    showAdmin();
-  }
-}
-
-function showAdmin() {
-  const loginSection = $("loginSection");
-  const adminSection = $("adminSection");
-  const errorEl = $("loginError");
-
-  if (loginSection) loginSection.hidden = true;
-  if (adminSection) adminSection.hidden = false;
-  if (errorEl) errorEl.style.display = "none";
-
-  loadRegistry();
-  renderGameList();
-}
-
 // ---- Init ----
 
 document.addEventListener("DOMContentLoaded", () => {
-  const loginBtn = $("adminLoginBtn");
-  const clearAllLbBtn = $("clearAllLbBtn");
-  const addGameBtn = $("addGameBtn");
+  // If we're on the login-only view, there will be no admin controls, so this will safely no-op
+  loadRegistry();
+  renderGameList();
 
-  if (loginBtn) loginBtn.addEventListener("click", handleLogin);
+  const addGameBtn = $("addGameBtn");
+  const clearAllLbBtn = $("clearAllLbBtn");
+
   if (addGameBtn) addGameBtn.addEventListener("click", addGameFromForm);
   if (clearAllLbBtn)
     clearAllLbBtn.addEventListener("click", clearAllLeaderboards);
-
-  const codeInput = $("adminCodeInput");
-  if (codeInput) {
-    codeInput.addEventListener("keyup", (e) => {
-      if (e.key === "Enter") {
-        handleLogin();
-      }
-    });
-  }
-
-  checkExistingLogin();
 });
+
