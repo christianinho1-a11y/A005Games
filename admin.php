@@ -1,27 +1,30 @@
 <?php
-// admin.php
+// admin.php — CS & IT Games Admin Panel (password protected)
 session_start();
 
+// Change this if you ever want a new code
 const ADMIN_CODE = 'A005';
 
-// Handle login
+// --- Handle login form submission ---
+$loginError = '';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['admin_code'])) {
-    $entered = trim($_POST['admin_code']);
+    $entered = trim($_POST['admin_code'] ?? '');
     if ($entered === ADMIN_CODE) {
         $_SESSION['cs_games_admin_logged_in'] = true;
-        // Redirect to avoid form resubmission
-        header("Location: admin.php");
+        // Redirect to clear POST and avoid resubmission warning
+        header('Location: admin.php');
         exit;
     } else {
-        $loginError = "Incorrect code. Try again.";
+        $loginError = 'Incorrect code. Try again.';
     }
 }
 
-// Handle logout
+// --- Handle logout request ---
 if (isset($_GET['logout'])) {
     unset($_SESSION['cs_games_admin_logged_in']);
     session_destroy();
-    header("Location: admin.php");
+    header('Location: admin.php');
     exit;
 }
 
@@ -33,6 +36,7 @@ $loggedIn = !empty($_SESSION['cs_games_admin_logged_in']);
   <meta charset="UTF-8" />
   <title>Admin Panel – CS & IT Games</title>
   <link rel="stylesheet" href="style.css" />
+  <!-- This JS only runs registry & leaderboard logic (no login JS now) -->
   <script defer src="admin.js"></script>
 </head>
 <body class="cs-body">
@@ -58,7 +62,9 @@ $loggedIn = !empty($_SESSION['cs_games_admin_logged_in']);
     </header>
 
     <?php if (!$loggedIn): ?>
-      <!-- LOGIN VIEW ONLY (Admin hidden until password is typed) -->
+      <!-- ===========================
+           LOGIN VIEW (ONLY THIS SHOWS UNTIL PASSWORD IS CORRECT)
+           ============================ -->
       <section class="layout-grid">
         <section class="card card-main" style="max-width: 480px; margin-inline: auto;">
           <header class="card-header">
@@ -82,7 +88,7 @@ $loggedIn = !empty($_SESSION['cs_games_admin_logged_in']);
                 required
               />
 
-              <?php if (!empty($loginError)): ?>
+              <?php if ($loginError !== ''): ?>
                 <p class="sub-card-meta" style="color:#f97373; margin-top:0.5rem;">
                   <?php echo htmlspecialchars($loginError); ?>
                 </p>
@@ -101,7 +107,9 @@ $loggedIn = !empty($_SESSION['cs_games_admin_logged_in']);
       </section>
 
     <?php else: ?>
-      <!-- FULL ADMIN DASHBOARD (only after correct password) -->
+      <!-- ===========================
+           FULL ADMIN DASHBOARD (ONLY AFTER SUCCESSFUL LOGIN)
+           ============================ -->
       <section class="layout-grid">
         <!-- LEFT COLUMN: Game registry + file creator -->
         <section class="card card-main">
@@ -112,7 +120,7 @@ $loggedIn = !empty($_SESSION['cs_games_admin_logged_in']);
             </p>
           </header>
 
-          <!-- Add game form (registry only) -->
+          <!-- Register existing game (for leaderboard control & category) -->
           <div class="sub-card">
             <h3 class="sub-card-title">Register Existing Game</h3>
             <div class="form-row stacked">
@@ -150,7 +158,7 @@ $loggedIn = !empty($_SESSION['cs_games_admin_logged_in']);
             </div>
           </div>
 
-          <!-- Create new files on WAMP -->
+          <!-- Create new HTML + JS files on WAMP via PHP -->
           <div class="sub-card">
             <h3 class="sub-card-title">Create New Game Files (WAMP)</h3>
             <p class="sub-card-meta small">
@@ -226,11 +234,11 @@ $loggedIn = !empty($_SESSION['cs_games_admin_logged_in']);
             </form>
           </div>
 
-          <!-- Game list -->
+          <!-- List of registered games -->
           <div class="sub-card">
             <h3 class="sub-card-title">Registered Games</h3>
             <ul id="gameList" class="info-list">
-              <!-- Filled by JS -->
+              <!-- Filled by admin.js -->
             </ul>
 
             <button id="clearAllLbBtn" class="btn btn-small btn-danger">
@@ -239,7 +247,7 @@ $loggedIn = !empty($_SESSION['cs_games_admin_logged_in']);
           </div>
         </section>
 
-        <!-- RIGHT COLUMN: Leaderboard tools / notes -->
+        <!-- RIGHT COLUMN: Notes -->
         <aside class="sidebar">
           <section class="card">
             <header class="card-header">
@@ -266,8 +274,9 @@ $loggedIn = !empty($_SESSION['cs_games_admin_logged_in']);
                 the HTML + JS files into this folder on your WAMP server.
               </li>
               <li>
-                <strong>Tip:</strong> Don't link to this page from student
-                menus. Just bookmark <code>admin.php</code> for yourself.
+                <strong>Tip:</strong> Don't put an obvious link to this page on
+                student menus. Just bookmark <code>admin.php</code> for
+                yourself.
               </li>
             </ul>
           </section>
@@ -277,3 +286,4 @@ $loggedIn = !empty($_SESSION['cs_games_admin_logged_in']);
   </main>
 </body>
 </html>
+
