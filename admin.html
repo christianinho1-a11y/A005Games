@@ -2,37 +2,146 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Admin Access</title>
+  <title>Admin Panel – CS & IT Games</title>
   <link rel="stylesheet" href="style.css" />
+  <script defer src="admin.js"></script>
 </head>
 <body class="cs-body">
+  <a href="index.html" class="back-link">← Back to Home</a>
+
   <main class="page-wrap">
-    <section class="card card-main" style="max-width: 420px; margin: 5rem auto;">
-      <header class="card-header">
-        <h1 class="card-title">Admin Access</h1>
-        <p class="card-subtitle">Teacher-only area</p>
-      </header>
+    <header class="page-header">
+      <div>
+        <h1 class="page-title">// Admin Panel</h1>
+        <p class="page-subtitle">
+          Manage games &amp; leaderboards
+          <span class="tag">Teacher Only</span>
+        </p>
+      </div>
+    </header>
 
-      <!-- POST directly to admin.php -->
-      <form method="post" action="admin.php" class="form-row stacked">
-        <label for="adminCode">Admin Code</label>
-        <input
-          type="password"
-          id="adminCode"
-          name="admin_code"
-          class="input"
-          placeholder="Enter code"
-          required
-        />
+    <!-- LOGIN VIEW -->
+    <section class="layout-grid" id="loginSection">
+      <section class="card card-main" style="max-width: 480px; margin-inline: auto;">
+        <header class="card-header">
+          <h2 class="card-title">Admin Login</h2>
+          <p class="card-subtitle">
+            Enter the admin code to access teacher tools.
+          </p>
+        </header>
 
-        <button type="submit" class="btn" style="margin-top:1rem;">
-          Enter Admin Panel
-        </button>
-      </form>
+        <div class="sub-card">
+          <label for="adminCodeInput" class="sub-card-title" style="margin-bottom: 0.5rem;">
+            Admin Code
+          </label>
+          <input
+            type="password"
+            id="adminCodeInput"
+            class="input"
+            placeholder="Enter admin code"
+          />
+          <div class="button-row" style="margin-top: 1rem;">
+            <button id="adminLoginBtn" class="btn">Login</button>
+          </div>
+          <p id="loginError" class="sub-card-meta" style="color:#f97373; margin-top:0.5rem; display:none;">
+            Incorrect code. Try again.
+          </p>
+          <p class="sub-card-meta small" style="margin-top:0.75rem;">
+            Hint: classroom-only admin code. (You set this as <strong>A005</strong>.)
+          </p>
+        </div>
+      </section>
+    </section>
 
-      <p class="sub-card-meta small" style="margin-top:1rem;">
-        Authorized staff only.
-      </p>
+    <!-- ADMIN DASHBOARD (hidden until correct code) -->
+    <section class="layout-grid" id="adminSection" hidden>
+      <section class="card card-main">
+        <header class="card-header">
+          <h2 class="card-title">Games Registry</h2>
+          <p class="card-subtitle">
+            Add, view, and remove games. Clear leaderboards.
+          </p>
+        </header>
+
+        <!-- Register existing game -->
+        <div class="sub-card">
+          <h3 class="sub-card-title">Register Existing Game</h3>
+          <div class="form-row stacked">
+            <label for="gameNameInput">Display Name</label>
+            <input
+              id="gameNameInput"
+              type="text"
+              class="input"
+              placeholder="e.g. If / Else Escape Room"
+            />
+
+            <label for="gameFileInput">HTML File Name</label>
+            <input
+              id="gameFileInput"
+              type="text"
+              class="input"
+              placeholder="e.g. if_else_escape.html"
+            />
+
+            <label for="gameCategorySelect">Category</label>
+            <select id="gameCategorySelect" class="input">
+              <option value="cs">Computer Science</option>
+              <option value="it">Information Technology</option>
+              <option value="cyber">Cyber Security</option>
+            </select>
+
+            <p class="sub-card-meta small">
+              The admin panel auto-generates a
+              <strong>leaderboard key</strong> from the file name.<br />
+              Example: <code>if_else_escape.html → if_else_escape_leaderboard</code><br />
+              Use that key in the game’s JS when you set up its leaderboard.
+            </p>
+
+            <button id="addGameBtn" class="btn">Register Game</button>
+          </div>
+        </div>
+
+        <!-- Registered games + leaderboard tools -->
+        <div class="sub-card">
+          <h3 class="sub-card-title">Registered Games</h3>
+          <ul id="gameList" class="info-list">
+            <!-- Filled by JS -->
+          </ul>
+
+          <button id="clearAllLbBtn" class="btn btn-small btn-danger">
+            Clear All Leaderboards in Registry
+          </button>
+        </div>
+      </section>
+
+      <aside class="sidebar">
+        <section class="card">
+          <header class="card-header">
+            <h2 class="card-title">How This Works</h2>
+          </header>
+          <ul class="info-list">
+            <li>
+              <strong>Protected:</strong> This dashboard is hidden until the correct
+              code (<code>A005</code>) is entered. This is front-end only, good
+              enough for a classroom.
+            </li>
+            <li>
+              <strong>Registry:</strong> Games are stored in
+              <code>localStorage</code> on this browser as metadata
+              (name/file/category/leaderboardKey).
+            </li>
+            <li>
+              <strong>Leaderboards:</strong> Each game gets a
+              <code>leaderboardKey</code>. Your game JS should use the same
+              key when saving scores (e.g. <code>if_else_escape_leaderboard</code>).
+            </li>
+            <li>
+              <strong>Tip:</strong> Don’t link this page obviously; you can just
+              bookmark it.
+            </li>
+          </ul>
+        </section>
+      </aside>
     </section>
   </main>
 </body>
