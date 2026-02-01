@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Access</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="cs-body">
+  <main class="page-wrap">
+    <section class="card card-main" style="max-width: 420px; margin: 5rem auto;">
+      <header class="card-header">
+        <h1 class="card-title">Admin Access</h1>
+        <p class="card-subtitle">Teacher-only area</p>
+      </header>
+
+      <!-- POST directly to admin.php -->
+      <form method="post" action="admin.php" class="form-row stacked">
+        <label for="adminCode">Admin Code</label>
+        <input
+          type="password"
+          id="adminCode"
+          name="admin_code"
+          class="input"
+          placeholder="Enter code"
+          required
+        />
+
+        <button type="submit" class="btn" style="margin-top:1rem;">
+          Enter Admin Panel
+        </button>
+      </form>
+
+      <p class="sub-card-meta small" style="margin-top:1rem;">
+        Authorized staff only.
+      </p>
+    </section>
+  </main>
+</body>
+</html>
